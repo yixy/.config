@@ -1,3 +1,9 @@
 # my config 
 
-my configuration for zsh , ranger, yabai, vim
+my configuration
+
+* zsh : `~/.zshrc`
+* ranger : `~/.config/ranger/rc.conf`
+* yabai : `~/.yabairc` ; `~/.skhdrc`
+* vim : `~/.vimrc`
+* nvim : `~/.config/nvim/init.vim`
