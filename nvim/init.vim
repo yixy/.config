@@ -8,9 +8,6 @@
 "
 """"""""""""""""""""""""""""""""""""
 
-
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -25,8 +22,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'vim-plug']}
-"vimwiki
-Plug 'vimwiki/vimwiki'
 call plug#end ()
 
 
@@ -247,19 +242,19 @@ let g:mkdp_browserfunc = ''
 " content_editable: if enable content editable for preview page, default: v:false
 " disable_filename: if disable filename header for preview page, default: 0
 let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {},
-    \ 'flowchart_diagrams': {},
-    \ 'content_editable': v:false,
-    \ 'disable_filename': 0,
-    \ 'toc': {}
-    \ }
+   \ 'mkit': {},
+   \ 'katex': {},
+   \ 'uml': {},
+   \ 'maid': {},
+   \ 'disable_sync_scroll': 0,
+   \ 'sync_scroll_type': 'middle',
+   \ 'hide_yaml_meta': 1,
+   \ 'sequence_diagrams': {},
+   \ 'flowchart_diagrams': {},
+   \ 'content_editable': v:false,
+   \ 'disable_filename': 0,
+   \ 'toc': {}
+   \ }
 
 " use a custom markdown style must be absolute path
 " like '/Users/username/markdown.css' or expand('~/markdown.css')
@@ -314,16 +309,4 @@ autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,l --------<Enter>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vimwiki
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"set nocompatible
-"filetype plugin on
-"syntax on
-
-
-let g:vimwiki_list = [{'path': '~/0x37/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
