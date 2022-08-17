@@ -82,6 +82,8 @@ let mapleader=" "
 "placehodler
 map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
 
+noremap <LEADER>o <ESC>2o<ESC>i
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -119,7 +121,7 @@ set laststatus=2
 map S :w<CR>
 map s <nop>
 map Q :q<CR>
-map R :source ~/.vimrc<CR>
+map R :source ~/.config/nvim/init.vim<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -136,7 +138,6 @@ set ignorecase
 set smartcase
 "配置空格回车触发关闭/的搜索高亮
 noremap <LEADER><CR> :nohlsearch<CR>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " split & tabe
