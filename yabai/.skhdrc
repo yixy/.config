@@ -138,6 +138,7 @@
 # toggle window split type
 # alt - e : yabai -m window --toggle split
 
+# add by youzhilane
 # float / unfloat window and fill in screen
  alt - t : yabai -m window --toggle float;\
            yabai -m window --grid 1:1:0:0:1:1
@@ -153,12 +154,14 @@
 # open terminal
 # cmd - return : /Applications/iTerm2.app
 
+# add by youzhilane
+#
 # focus window(同一个空间切换窗口焦点)
 alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
-
+#
 # swap window(同一个空间调整窗口位置)
 shift + alt - h : yabai -m window --swap west
 shift + alt - j : yabai -m window --swap south

@@ -4,5 +4,8 @@
   "suggest.enablePreselect": false,
   "coc.preferences.formatOnSaveFiletypes": [
     "json"
+  ],
+  "coc.preferences.formatOnSave": [
+    "dart"
   ]
 }

@@ -7,7 +7,7 @@
 "        |___/
 "
 """"""""""""""""""""""""""""""""""""
-
+"add by youzhilane
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -22,6 +22,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'vim-plug']}
+"dart: for filetype detection and syntax highlighting"
+Plug 'dart-lang/dart-vim-plugin'
 call plug#end ()
 
 
@@ -82,8 +84,6 @@ let mapleader=" "
 "placehodler
 map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
 
-noremap <LEADER>o <ESC>2o<ESC>i
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -93,6 +93,7 @@ set t_Co=256
 hi Visual ctermbg=30
 
 set number
+set rnu
 set wrap
 "当前行显示高亮线
 set cursorline
@@ -316,11 +317,14 @@ autocmd Filetype markdown inoremap <buffer> ,l --------<Enter>
 " coc.nvim plugin setting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " coc插件配置
+" coc-flutter-tools: flutter plugin
+" coc-go: golps extensions
 let g:coc_global_extensions = [ 
   \ 'coc-marketplace', 
   \ 'coc-json', 
   \ 'coc-vimlsp', 
-  \ 'coc-gocode']
+  \ 'coc-flutter-tools',
+  \ 'coc-go'] 
 
 " 允许未保存的vim文件暂存到缓冲区
 set hidden
@@ -467,9 +471,9 @@ nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+"nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+"nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
