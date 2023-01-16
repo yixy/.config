@@ -1,6 +1,22 @@
 # my config 
 
-## 1 arch-linux install
+## 0 my configuration
+
+Linux:
+
+* zsh : `~/.zshrc`
+* ranger : `~/.config/ranger/rc.conf`
+* nvim : `~/.config/nvim/init.vim`
+
+macOS:
+
+* yabai : `~/.yabairc` ; `~/.skhdrc`
+
+archive:
+
+* vim (archive) : `~/.vimrc`
+
+## 1 arch-linux 
 
 官方文档参考： https://wiki.archlinux.org/title/Installation_guide
 
@@ -61,7 +77,7 @@ pacman -S man
 pacman -S git
 pacman -S inetutils
 pacman -S openssh
-pacman -S neovime
+pacman -S neovim
 
 # 基础开发工具，如gcc
 pacman -S base-devel
@@ -77,6 +93,18 @@ cd yay
 makepkg -si
 # pacman -Qs yay
 
+```
+
+### systemd配置
+
+```shell
+#sudo nvim /etc/systemd/system/v2ray.service
+
+#reload daemon
+systemctl daemon-reload
+
+#enable service
+systemctl enable v2ray.service
 ```
 
 ## 2 xorg & dwm & st
@@ -146,7 +174,7 @@ xrdb -merge ~/.Xresources
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
-fxitx &
+fcitx &
 
 #启动dwm
 exec dwm
@@ -203,10 +231,66 @@ pacman -S fcitx-configtool
 #fcitx&
 ```
 
-## 3 my configuration
+## 3 zsh & oh-my-shell
 
-* zsh : `~/.zshrc`
-* ranger : `~/.config/ranger/rc.conf`
-* yabai : `~/.yabairc` ; `~/.skhdrc`
-* vim (archive) : `~/.vimrc`
-* nvim : `~/.config/nvim/init.vim`
+安装并切换到zsh
+
+```shell
+pacman -S zsh
+chsh -s /bin/zsh
+```
+
+安装oh-my-shell
+
+```shell
+#https://ohmyz.sh/#install
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+配置oh-my-shell
+
+```shell
+#配置文件
+cd ~
+mv .zshrc .zshrc_bak
+wget https://github.com/yixy/.config/raw/main/zsh/.zshrc
+
+#安装提示插件
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+## 4 ranger
+
+```shell
+pacman -S ranger
+
+#生成默认配置文件
+ranger --copy-config=all
+
+cd ~/.config/ranger
+mv rifle.conf rifle.conf_bak
+mv rc.conf rc.conf_bak
+wget https://github.com/yixy/.config/raw/main/ranger/rifle.conf
+wget https://github.com/yixy/.config/raw/main/ranger/rc.conf
+```
+
+## 5 nvim
+
+配置nvim
+
+```shell
+#pacman -S neovim
+cd ~/.config/nvim/
+wget https://github.com/yixy/.config/raw/main/nvim/init.vim
+```
+
+安装vim-plug
+
+```shell
+#https://github.com/junegunn/vim-plug
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+```
+
+打开nvim，通过`:PlugInstall`安装相关插件
+
