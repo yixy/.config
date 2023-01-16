@@ -84,8 +84,8 @@ pacman -S base-devel
 
 #xpn
 git clone https://github.com/v2ray/v2ray-core
-cd v2ray-core
-./v2ray run -c config.json
+#cd v2ray-core
+#./v2ray run -c config.json
 
 # AUR 的辅助工具 yay
 git clone https://aur.archlinux.org/yay.git
@@ -99,7 +99,27 @@ makepkg -si
 
 ```shell
 #sudo nvim /etc/systemd/system/v2ray.service
+[Unit]
+Description=V2Ray Service
+Documentation=https://www.v2fly.org/
+After=network.target nss-lookup.target
 
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/path/v2ray/v2ray -config /path/v2ray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+
+setting service.
+
+```shell
 #reload daemon
 systemctl daemon-reload
 
@@ -254,6 +274,10 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 cd ~
 mv .zshrc .zshrc_bak
 wget https://github.com/yixy/.config/raw/main/zsh/.zshrc
+
+#alias rm='echo "Please try trash...";false'
+#alias vpn='xxxx'
+#alias novpn='export http_proxy=""; export HTTP_PROXY=""; export https_proxy=""; export HTTPS_PROXY=""'
 
 #安装提示插件
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
