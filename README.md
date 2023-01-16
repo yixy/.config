@@ -97,6 +97,8 @@ makepkg -si
 
 ### systemd配置
 
+参考 https://wiki.archlinuxcn.org/wiki/Systemd
+
 ```shell
 #sudo nvim /etc/systemd/system/v2ray.service
 [Unit]
