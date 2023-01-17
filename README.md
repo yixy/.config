@@ -129,6 +129,17 @@ systemctl daemon-reload
 systemctl enable v2ray.service
 ```
 
+### fix EFI booting
+
+```shell
+mount FS0
+FS0:
+cd EFI/arch
+grubx64.efi
+
+#reinstall grub
+```
+
 ## 2 xorg & dwm & st
 
 ### 安装xorg
