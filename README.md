@@ -59,11 +59,21 @@ grub-install --target=x86_64-efi --efi-directory=/boot
 ### 滚动更新
 
 ```shell
-# 新增、卸载、查询软件
+# 新增
 # pacman -S xxx
+# 搜索软件
+# pacman -Ss xxx
+# 卸载
 # pacman -R xxx
+# 查询已安装软件
 # pacman -Qs xxx
-pacman -Syyu
+
+# Pacman can update all packages on the system with just one command. This could take quite a while depending on how up-to-date the system is. The following command synchronizes the repository databases and updates the system's packages, excluding "local" packages that are not in the configured repositories
+pacman -Syu
+# 不推荐：include local
+# pacman -Syyu
+# 首先同步软件仓库，然后安装 package，这样做的风险是违反了Arch系不支持部分更新的原则
+# pacman -Sy package
 ```
 
 ### 用户权限
@@ -335,3 +345,11 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 ```
 
 打开nvim，通过`:PlugInstall`安装相关插件。
+
+## 6 macOS & IOS
+
+[mac系统偏好设置](/macos/01.mac系统偏好设置.md)
+
+[hombrew使用](/macos/02.hombrew使用.md)
+
+[mac常用软件](/macos/03.mac常用软件.md)
