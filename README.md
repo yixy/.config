@@ -4,13 +4,18 @@
 
 Linux:
 
-* zsh : `~/.zshrc`
+* xorg : ~/.xinitrc
+* dwm & st
+* zsh & oh-my-zsh : `~/.zshrc`
 * ranger : `~/.config/ranger/rc.conf`
 * nvim : `~/.config/nvim/init.vim`
 
 macOS:
 
 * yabai : `~/.yabairc` ; `~/.skhdrc`
+* zsh & oh-my-zsh : `~/.zshrc`
+* ranger : `~/.config/ranger/rc.conf`
+* nvim : `~/.config/nvim/init.vim`
 
 archive:
 
@@ -264,7 +269,7 @@ pacman -S fcitx-configtool
 #fcitx&
 ```
 
-## 3 zsh & oh-my-shell
+## 3 zsh & oh-my-zsh
 
 安装并切换到zsh
 
@@ -273,14 +278,14 @@ pacman -S zsh
 chsh -s /bin/zsh
 ```
 
-安装oh-my-shell
+安装oh-my-zsh
 
 ```shell
 #https://ohmyz.sh/#install
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-配置oh-my-shell
+配置oh-my-zsh
 
 ```shell
 #配置文件
@@ -329,5 +334,4 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 ```
 
-打开nvim，通过`:PlugInstall`安装相关插件
-
+打开nvim，通过`:PlugInstall`安装相关插件。
