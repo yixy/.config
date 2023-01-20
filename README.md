@@ -353,3 +353,5 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 [hombrew使用](/macos/02.hombrew使用.md)
 
 [mac常用软件](/macos/03.mac常用软件.md)
+
+[盒盖掉电问题](/macos/04.rmbp盒盖掉电问题.md)
