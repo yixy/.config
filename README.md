@@ -346,6 +346,13 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 
 打开nvim，通过`:PlugInstall`安装相关插件。
 
+install nodejs and npm for coc.
+
+```shell
+sudo pacman -Syu nodejs
+sudo pacman -Syu npm
+```
+
 ## 6 macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
