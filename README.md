@@ -222,7 +222,9 @@ xrdb -merge ~/.Xresources
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
-fcitx &
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
+fcitx5 -d
 
 #启动dwm
 exec dwm
@@ -255,28 +257,38 @@ pacman -S noto-fonts noto-fonts-cjk
 `nvim /etc/locale.gen`配置语言。
 
 ```shell
-zh_CN.UTF-8
+zh_CN.UTF-8 UTF-8
+en_US.UTF-8 UTF-8  
 ```
 
-使用`locale-gent`启用。
+使用`locale-gen`启用。
 
 fontconfig配置可参考双猫cc的文章： https://catcat.cc/post/2021-03-07/
 
 ### 输入法
 
-配置输入法。
+配置输入法。 参考 https://wiki.archlinux.org/title/Fcitx5
 
 ```shell
-pacman -S fcitx-im
-pacman -S fcitx-googlepinyin
-pacman -S fcitx-configtool
+# im include qt & gtk
+pacman -S fcitx5-im
+pacman -S fcitx5-chinese-addons
 
 #注意，开启fcixt输入法需要在`~/.xinitrc`中配置fcitx
 #nvim ~/.xinitrc
-#export GTK_IM_MODULE=fcitx
-#export QT_IM_MODULE=fcitx
-#export XMODIFIERS=@im=fcitx
-#fcitx&
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
+fcitx5 -d
+
+```
+
+进行配置。
+
+```shell
+fcitx5-configtool
 ```
 
 ## 3 zsh & oh-my-zsh
@@ -345,13 +357,6 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 ```
 
 打开nvim，通过`:PlugInstall`安装相关插件。
-
-install nodejs and npm for coc.
-
-```shell
-sudo pacman -Syu nodejs
-sudo pacman -Syu npm
-```
 
 ## 6 macOS & IOS
 

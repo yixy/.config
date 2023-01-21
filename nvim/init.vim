@@ -84,6 +84,10 @@ let mapleader=" "
 "placehodler
 map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
 
+"copy data between different vim instance
+vmap <LEADER>y :w! /tmp/neovimtmp<CR>
+nmap <LEADER>p :r! cat /tmp/neovimtmp<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -475,7 +479,7 @@ nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for previous item.
 "nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+"nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 "CocConfig
 "Coc snipis
