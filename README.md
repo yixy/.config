@@ -260,7 +260,7 @@ zh_CN.UTF-8
 
 使用`locale-gent`启用。
 
-fontconfig配置： https://catcat.cc/post/2021-03-07/
+fontconfig配置可参考双猫cc的文章： https://catcat.cc/post/2021-03-07/
 
 ### 输入法
 
