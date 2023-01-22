@@ -49,7 +49,7 @@ dhcpcd
 ```
 #intel-ucode intel驱动
 #os-prober 用于其他os检测
-pacman -S grub efibootmgr intel-ucode os-prober
+pacman -Syu grub efibootmgr intel-ucode os-prober
 
 mkdir /boot/grub
 grub-mkconfig > /boot/grub/grub.cfg
@@ -60,7 +60,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot
 
 ```shell
 # 新增
-# pacman -S xxx
+# pacman -Syu xxx
 # 搜索软件
 # pacman -Ss xxx
 # 卸载
@@ -88,14 +88,18 @@ visudo
 ### 常用软件
 
 ```shell
-pacman -S man 
-pacman -S git
-pacman -S inetutils
-pacman -S openssh
-pacman -S neovim
+pacman -Syu man 
+pacman -Syu git
+pacman -Syu inetutils
+pacman -Syu openssh
+pacman -Syu neovim
+pacman -Syu keychain
+
+#add ssh key to keychain
+#ssh-keygen -f /pathtokey/id_rsa -p
 
 # 基础开发工具，如gcc
-pacman -S base-devel
+pacman -Syu base-devel
 
 #xpn
 git clone https://github.com/v2ray/v2ray-core
@@ -170,9 +174,9 @@ linux OS<--X服务器<--[通过X协议交互]-->窗口管理器/综合桌面环�
 ```
 
 ```shell
-pacman -S xorg xorg-server xorg-apps xorg-xinit
-pacman -S lightdm 
-pacman -S lightdm-gtk-greeter lightdm-gtk-greeter-settings
+pacman -Syu xorg xorg-server xorg-apps xorg-xinit
+pacman -Syu lightdm 
+pacman -Syu lightdm-gtk-greeter lightdm-gtk-greeter-settings
 ```
 
 ### 安装dwm和st
@@ -251,7 +255,7 @@ fc-match
 #安装字体
 yay -S ttf-ubuntu-font-family
 #中文字体
-pacman -S noto-fonts noto-fonts-cjk
+pacman -Syu noto-fonts noto-fonts-cjk
 ```
 
 `nvim /etc/locale.gen`配置语言。
@@ -271,8 +275,8 @@ fontconfig配置可参考双猫cc的文章： https://catcat.cc/post/2021-03-07/
 
 ```shell
 # im include qt & gtk
-pacman -S fcitx5-im
-pacman -S fcitx5-chinese-addons
+pacman -Syu fcitx5-im
+pacman -Syu fcitx5-chinese-addons
 
 #注意，开启fcixt输入法需要在`~/.xinitrc`中配置fcitx
 #nvim ~/.xinitrc
@@ -296,7 +300,7 @@ fcitx5-configtool
 安装并切换到zsh
 
 ```shell
-pacman -S zsh
+pacman -Syu zsh
 chsh -s /bin/zsh
 ```
 
@@ -326,7 +330,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 ## 4 ranger
 
 ```shell
-pacman -S ranger
+pacman -Syu ranger
 
 #生成默认配置文件
 ranger --copy-config=all
@@ -343,7 +347,7 @@ wget https://github.com/yixy/.config/raw/main/ranger/rc.conf
 配置nvim
 
 ```shell
-#pacman -S neovim
+#pacman -Syu neovim
 cd ~/.config/nvim/
 wget https://github.com/yixy/.config/raw/main/nvim/init.vim
 ```
