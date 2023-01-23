@@ -80,24 +80,27 @@ pacman -Syu
 # pacman -Sy package
 ```
 
-### 用户权限
+### 常用软件 & 用户权限
 
 ```shell
+pacman -Syu openssh
+pacman -Syu neovim
+pacman -Syu sudo
+
 useradd -m -d /home/youzhilane -G wheel youzhilane
 
 # uncommon to add sudo permission to wheel group
 EDITOR=nvim visudo
-```
 
-### 常用软件
+#setting /etc/ssh/sshd.conf
+systemctl enable sshd
+systemctl start sshd
 
-```shell
 pacman -Syu man 
 pacman -Syu git
 pacman -Syu inetutils
-pacman -Syu openssh
-pacman -Syu neovim
 pacman -Syu keychain
+pacman -Syu wget
 
 # -p to mod password
 #ssh-keygen -f /pathtokey/id_rsa -p
@@ -108,7 +111,10 @@ pacman -Syu keychain
 pacman -Syu base-devel
 
 #xpn
-git clone https://github.com/v2ray/v2ray-core
+pacman -Syu v2ray
+systemctl enable v2ray
+systemctl start v2ray
+#manual: git clone https://github.com/v2ray/v2ray-core
 #cd v2ray-core
 #./v2ray run -c config.json
 
@@ -125,6 +131,7 @@ makepkg -si
 参考 https://wiki.archlinuxcn.org/wiki/Systemd
 
 ```shell
+#例子，v2ray已经安装过，不用重复配置systemd了
 #sudo nvim /etc/systemd/system/v2ray.service
 [Unit]
 Description=V2Ray Service
@@ -229,15 +236,6 @@ xrandr --output Virtual-1 --mode 3840x2160
 #apply hidp
 xrdb -merge ~/.Xresources
 
-#apply fcitx
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export SDL_IM_MODULE=fcitx
-export GLFW_IM_MODULE=ibus
-
-fcitx5 -d
-
 #启动dwm
 exec dwm
 
@@ -261,7 +259,7 @@ fc-match -a
 fc-match
 
 #安装字体
-yay -S ttf-ubuntu-font-family
+#yay -S ttf-ubuntu-font-family
 #中文字体
 pacman -Syu noto-fonts noto-fonts-cjk
 ```
@@ -288,13 +286,14 @@ pacman -Syu fcitx5-chinese-addons
 
 #注意，开启fcixt输入法需要在`~/.xinitrc`中配置fcitx
 #nvim ~/.xinitrc
+#add fcitx
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
 export GLFW_IM_MODULE=ibus
-fcitx5 -d
 
+fcitx5 -d
 ```
 
 进行配置。
@@ -346,10 +345,18 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 cd ~
 mv .zshrc .zshrc_bak
 wget https://github.com/yixy/.config/raw/main/zsh/.zshrc
+diff .zshrc .zshrc_bak
 
 #alias rm='echo "Please try trash...";false'
 #alias vpn='xxxx'
 #alias novpn='export http_proxy=""; export HTTP_PROXY=""; export https_proxy=""; export HTTPS_PROXY=""'
+
+cd ~
+wget https://github.com/yixy/.config/raw/main/.myenvrc
+#diff!!!
+wget https://github.com/yixy/.config/raw/main/.xinitrc
+#diff!!!
+wget https://github.com/yixy/.config/raw/main/.Xresources
 
 #安装提示插件
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -368,6 +375,8 @@ mv rifle.conf rifle.conf_bak
 mv rc.conf rc.conf_bak
 wget https://github.com/yixy/.config/raw/main/ranger/rifle.conf
 wget https://github.com/yixy/.config/raw/main/ranger/rc.conf
+diff rifle.conf rifle.conf_bak
+diff rc.conf rc.conf_bak
 ```
 
 ## 5 nvim
@@ -378,6 +387,7 @@ wget https://github.com/yixy/.config/raw/main/ranger/rc.conf
 #pacman -Syu neovim
 cd ~/.config/nvim/
 wget https://github.com/yixy/.config/raw/main/nvim/init.vim
+wget https://github.com/yixy/.config/raw/main/nvim/coc-settings.json
 ```
 
 安装vim-plug
@@ -386,6 +396,12 @@ wget https://github.com/yixy/.config/raw/main/nvim/init.vim
 #https://github.com/junegunn/vim-plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+```
+
+安装nodejs和npm（coc的依赖）
+
+```shell
+pacman -Syu nodejs npm
 ```
 
 打开nvim，通过`:PlugInstall`安装相关插件。
