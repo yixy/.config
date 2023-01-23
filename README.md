@@ -43,6 +43,7 @@ wpa_passphrase mywifiname mywifipaswd > internet.conf
 wpa_supplicant -c internet.conf -i enp0s3 &
 
 dhcpcd
+#注意提前在root系统中安装dhcpcd： pacman -Syu dhcpcd
 ```
 ### Grub 安装
 
@@ -79,10 +80,10 @@ pacman -Syu
 ### 用户权限
 
 ```shell
-user add -m -d /home/youzhilane -G wheel youzhilane
+useradd -m -d /home/youzhilane -G wheel youzhilane
 
 # uncommon to add sudo permission to wheel group
-visudo
+EDITOR=nvim visudo
 ```
 
 ### 常用软件
