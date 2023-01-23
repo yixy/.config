@@ -307,9 +307,16 @@ fcitx5-configtool
 #wallpaper manage
 pacman -Syu nitrogen
 #合成管理器，为不带合成管理器的窗口带来透明效果
-pacman -Syu picom
+#pacman -Syu picom # frozen, use yay to install
+yay -S picom
 
-#setting is in xinitrc
+cp /etc/xdg/picom.conf ~/.config
+#关闭淡入淡出效果
+#fading = false;
+#关闭fcitx5的透明效果
+#opacity-rule = ["100:class_g = 'fcitx'"]
+
+#open in xinitrc
 ```
 
 ## 3 zsh & oh-my-zsh
