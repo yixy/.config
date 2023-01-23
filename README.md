@@ -44,6 +44,9 @@ wpa_supplicant -c internet.conf -i enp0s3 &
 
 dhcpcd
 #注意提前在root系统中安装dhcpcd： pacman -Syu dhcpcd
+
+#查看IP
+ip adress show
 ```
 ### Grub 安装
 
@@ -190,11 +193,11 @@ pacman -Syu lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
 ```shell
 # install dwm
-git clone https://git.suckless.org/dwm
+git clone git@github.com:yixy/dwm.git
 sudo make clean install 
 
 # install st
-git clone https://github.com/theniceboy/st.git
+git clone git@github.com:yixy/st.git
 sudo make clean install
 ```
 
