@@ -301,6 +301,8 @@ fcitx5-configtool
 
 ### 壁纸效果
 
+壁纸资源： https://wallpapertag.com/
+
 ```shell
 #wallpaper manage
 pacman -Syu nitrogen
