@@ -95,8 +95,10 @@ pacman -Syu openssh
 pacman -Syu neovim
 pacman -Syu keychain
 
-#add ssh key to keychain
+# -p to mod password
 #ssh-keygen -f /pathtokey/id_rsa -p
+#.myenvrc: add ssh key to keychain
+#eval $(keychain --eval --quiet /pathtokey/id_rsa
 
 # 基础开发工具，如gcc
 pacman -Syu base-devel
@@ -217,6 +219,7 @@ Xft.dpi: 192
 #xrandr --addmode Virtual-1 "3840x2160_60.00"
 
 #apply xrandr
+#xrandr --output Virtual-1 --mode 2560x1600
 xrandr --output Virtual-1 --mode 3840x2160
 
 #apply hidp
@@ -228,6 +231,7 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
 export GLFW_IM_MODULE=ibus
+
 fcitx5 -d
 
 #启动dwm
@@ -293,6 +297,17 @@ fcitx5 -d
 
 ```shell
 fcitx5-configtool
+```
+
+### 壁纸效果
+
+```shell
+#wallpaper manage
+pacman -Syu nitrogen
+#合成管理器，为不带合成管理器的窗口带来透明效果
+pacman -Syu picom
+
+#setting is in xinitrc
 ```
 
 ## 3 zsh & oh-my-zsh

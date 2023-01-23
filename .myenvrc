@@ -1,3 +1,10 @@
 alias rm='echo "Please try trash...";false'
 alias vpn='export http_proxy="http://127.0.0.1:8001"; export HTTP_PROXY="http://127.0.0.1:8001"; export https_proxy="http://127.0.0.1:8001"; export HTTPS_PROXY="http://127.0.0.1:8001"'
 alias novpn='export http_proxy=""; export HTTP_PROXY=""; export https_proxy=""; export HTTPS_PROXY=""'
+
+alias vim='nvim'
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
+
+eval $(keychain --eval --quiet ~/.ssh/id_rsa)
+

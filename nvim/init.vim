@@ -95,6 +95,8 @@ colorscheme molokai
 "终端支持256种颜色
 set t_Co=256
 hi Visual ctermbg=30
+"背景透明
+hi Normal guibg=NONE ctermbg=NONE
 
 set number
 set rnu
