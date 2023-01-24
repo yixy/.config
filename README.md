@@ -434,3 +434,19 @@ pacman -S nodejs npm
 [mac常用软件](/macos/03.mac常用软件.md)
 
 [盒盖掉电问题](/macos/04.rmbp盒盖掉电问题.md)
+
+## 7 trouble shooting
+
+### 【arch Linux】虚拟机安装
+
+https://wiki.archlinuxcn.org/zh-hans/VirtualBox/在虚拟机中安装_Arch_Linux
+
+### 【arch Linux】关机慢
+
+```shell
+#nvim /etc/systemd/system.conf
+DefaultTimeoutStartSec=10s
+DefaultTiemoutStopSec=10s
+
+systemctl daemon-reload
+```
