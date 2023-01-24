@@ -43,7 +43,7 @@ wpa_passphrase mywifiname mywifipaswd > internet.conf
 wpa_supplicant -c internet.conf -i enp0s3 &
 
 dhcpcd
-#注意提前在root系统中安装dhcpcd： pacman -Syu dhcpcd
+#注意提前在root系统中安装dhcpcd： pacman -S dhcpcd
 
 #查看IP
 ip adress show
@@ -53,7 +53,7 @@ ip adress show
 ```
 #intel-ucode intel驱动
 #os-prober 用于其他os检测
-pacman -Syu grub efibootmgr intel-ucode os-prober
+pacman -S grub efibootmgr intel-ucode os-prober
 
 mkdir /boot/grub
 grub-mkconfig > /boot/grub/grub.cfg
@@ -63,29 +63,48 @@ grub-install --target=x86_64-efi --efi-directory=/boot
 ### 滚动更新
 
 ```shell
-# 新增
-# pacman -Syu xxx
-# 搜索软件
+# 搜索可更新软件
 # pacman -Ss xxx
+# 新增
+# pacman -S xxx
+# 获取软件情报
+# pacman -Sy （不推荐的）
+# 强制获取软件情报
+# pacman -Syy （不推荐的）
+# 获取软件情报并更新
+# pacman -Syu
+# pacman -Syyu
+# 【Pacman can update all packages on the system with just one command. This could take quite a while depending on how up-to-date the system is. The following command synchronizes the repository databases and updates the system's packages, excluding "local" packages that are not in the configured repositories】
+# 【注意！！！不推荐先同步软件仓库，然后安装更新 package（pacman -Sy，再pacman -Su），这样做的风险是违反了Arch系不支持部分更新的原则】
+# 删除pacman缓存
+# pacman -Sc
+
 # 卸载
 # pacman -R xxx
-# 查询已安装软件
+# 卸载（包括依赖）
+# pacman -Rs xxx
+# 卸载（包括依赖和全局配置文件）
+# pacman -Rns xxx
+
+# 查询所有已安装软件
+# pacman -Q
+# 查询所有已安装的非系统软件
+# pacman -Qe
+# 查询所有已安装的非系统软件，不显示版本和介绍信息
+# pacman -Qeq
+# 在已安装软件中查找
 # pacman -Qs xxx
 
-# Pacman can update all packages on the system with just one command. This could take quite a while depending on how up-to-date the system is. The following command synchronizes the repository databases and updates the system's packages, excluding "local" packages that are not in the configured repositories
-pacman -Syu
-# 不推荐：include local
-# pacman -Syyu
-# 首先同步软件仓库，然后安装 package，这样做的风险是违反了Arch系不支持部分更新的原则
-# pacman -Sy package
+# 删除不被依赖的软件包
+sudo pacman -Rns $(pacman -Qdtq)
 ```
 
 ### 常用软件 & 用户权限
 
 ```shell
-pacman -Syu openssh
-pacman -Syu neovim
-pacman -Syu sudo
+pacman -S openssh
+pacman -S neovim
+pacman -S sudo
 
 useradd -m -d /home/youzhilane -G wheel youzhilane
 
@@ -96,11 +115,11 @@ EDITOR=nvim visudo
 systemctl enable sshd
 systemctl start sshd
 
-pacman -Syu man 
-pacman -Syu git
-pacman -Syu inetutils
-pacman -Syu keychain
-pacman -Syu wget
+pacman -S man 
+pacman -S git
+pacman -S inetutils
+pacman -S keychain
+pacman -S wget
 
 # -p to mod password
 #ssh-keygen -f /pathtokey/id_rsa -p
@@ -108,10 +127,10 @@ pacman -Syu wget
 #eval $(keychain --eval --quiet /pathtokey/id_rsa
 
 # 基础开发工具，如gcc
-pacman -Syu base-devel
+pacman -S base-devel
 
 #xpn
-pacman -Syu v2ray
+pacman -S v2ray
 systemctl enable v2ray
 systemctl start v2ray
 #manual: git clone https://github.com/v2ray/v2ray-core
@@ -187,9 +206,9 @@ linux OS<--X服务器<--[通过X协议交互]-->窗口管理器/综合桌面环�
 ```
 
 ```shell
-pacman -Syu xorg xorg-server xorg-apps xorg-xinit
-pacman -Syu lightdm 
-pacman -Syu lightdm-gtk-greeter lightdm-gtk-greeter-settings
+pacman -S xorg xorg-server xorg-apps xorg-xinit
+pacman -S lightdm 
+pacman -S lightdm-gtk-greeter lightdm-gtk-greeter-settings
 ```
 
 ### 安装dwm和st
@@ -261,7 +280,7 @@ fc-match
 #安装字体
 #yay -S ttf-ubuntu-font-family
 #中文字体
-pacman -Syu noto-fonts noto-fonts-cjk
+pacman -S noto-fonts noto-fonts-cjk
 ```
 
 `nvim /etc/locale.gen`配置语言。
@@ -281,8 +300,8 @@ fontconfig配置可参考双猫cc的文章： https://catcat.cc/post/2021-03-07/
 
 ```shell
 # im include qt & gtk
-pacman -Syu fcitx5-im
-pacman -Syu fcitx5-chinese-addons
+pacman -S fcitx5-im
+pacman -S fcitx5-chinese-addons
 
 #注意，开启fcixt输入法需要在`~/.xinitrc`中配置fcitx
 #nvim ~/.xinitrc
@@ -308,9 +327,9 @@ fcitx5-configtool
 
 ```shell
 #wallpaper manage
-pacman -Syu nitrogen
+pacman -S nitrogen
 #合成管理器，为不带合成管理器的窗口带来透明效果
-#pacman -Syu picom # frozen, use yay to install
+#pacman -S picom # frozen, use yay to install
 yay -S picom
 
 cp /etc/xdg/picom.conf ~/.config
@@ -327,7 +346,7 @@ cp /etc/xdg/picom.conf ~/.config
 安装并切换到zsh
 
 ```shell
-pacman -Syu zsh
+pacman -S zsh
 chsh -s /bin/zsh
 ```
 
@@ -365,7 +384,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 ## 4 ranger
 
 ```shell
-pacman -Syu ranger
+pacman -S ranger
 
 #生成默认配置文件
 ranger --copy-config=all
@@ -384,7 +403,7 @@ diff rc.conf rc.conf_bak
 配置nvim
 
 ```shell
-#pacman -Syu neovim
+#pacman -S neovim
 cd ~/.config/nvim/
 wget https://github.com/yixy/.config/raw/main/nvim/init.vim
 wget https://github.com/yixy/.config/raw/main/nvim/coc-settings.json
@@ -401,7 +420,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 安装nodejs和npm（coc的依赖）
 
 ```shell
-pacman -Syu nodejs npm
+pacman -S nodejs npm
 ```
 
 打开nvim，通过`:PlugInstall`安装相关插件。
