@@ -45,16 +45,37 @@ wpa_supplicant -c internet.conf -i enp0s3 &
 dhcpcd
 #注意提前在root系统中安装dhcpcd： pacman -S dhcpcd
 
+vim /etc/pacman.d/mirrorlist
+#Server = https://mirror.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+
 #查看IP
 ip adress show
 ```
 ### Grub 安装
 
-```
-#intel-ucode intel驱动
-#os-prober 用于其他os检测
-pacman -S grub efibootmgr intel-ucode os-prober
+AMD CPU
 
+```shell
+pacman -S amd-ucode
+```
+
+Intel CPU
+
+```
+pacman -S intel-ucode
+```
+
+参考官方文档，若主板系统是 BIOS，就使用 MBR 分区格式。若为EFI则使用GPT 。
+
+```shell
+#BIOS
+pacman -S grub
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+
+#EFI
+#os-prober 用于其他os检测
+pacman -S grub efibootmgr os-prober
 mkdir /boot/grub
 grub-mkconfig > /boot/grub/grub.cfg
 grub-install --target=x86_64-efi --efi-directory=/boot
@@ -235,7 +256,7 @@ sudo make clean install
 Xft.dpi: 192
 ```
 
-`nvim ~/.xinittrc`编辑启动配置
+`nvim ~/.xinitrc`编辑启动配置
 
 ```shell
 # 查看分辨率
@@ -437,9 +458,26 @@ pacman -S nodejs npm
 
 ## 7 trouble shooting
 
-### 【arch Linux】虚拟机安装
+### 【arch Linux】VirtualBox虚拟机安装
+
+可参考如下链接。
 
 https://wiki.archlinuxcn.org/zh-hans/VirtualBox/在虚拟机中安装_Arch_Linux
+
+* 待解决：VirtualBox驱动不太好搞定，参考官网方法没解决，观看视频一直卡顿。
+
+### 【arch Linux】VirtualBox虚拟机安装
+
+安装Parallels Tool
+
+```shell
+#Mac Dir: /Applications/Parallels\ Desktop.app/Contents/Resources/Tools/prl-tools-lin.iso
+mount /dev/cdrom /mnt/cdrom
+pacman -S linux-headers
+pacman -S dkms
+cd /mnt/cdrom
+./install
+```
 
 ### 【arch Linux】关机慢
 
