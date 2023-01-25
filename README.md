@@ -466,7 +466,7 @@ https://wiki.archlinuxcn.org/zh-hans/VirtualBox/在虚拟机中安装_Arch_Linux
 
 * 待解决：VirtualBox驱动不太好搞定，参考官网方法没解决，观看视频一直卡顿。
 
-### 【arch Linux】VirtualBox虚拟机安装
+### 【arch Linux】ParallelsDesktop虚拟机安装
 
 安装Parallels Tool
 
