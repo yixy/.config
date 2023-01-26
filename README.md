@@ -468,6 +468,10 @@ https://wiki.archlinuxcn.org/zh-hans/VirtualBox/在虚拟机中安装_Arch_Linux
 
 ### 【arch Linux】ParallelsDesktop虚拟机安装
 
+可参考如下链接。
+
+https://wiki.archlinux.org/title/Parallels_Desktop
+
 安装Parallels Tool
 
 ```shell
@@ -477,6 +481,39 @@ pacman -S linux-headers
 pacman -S dkms
 cd /mnt/cdrom
 ./install
+```
+
+视频播放无声音，可安装如下驱动。
+
+```shell
+$ sudo pacman -S alsa-utils alsa-firmaware
+$ sudo pacman -S pulseaudio pulseaudio-alsa
+$ sudo pacman -S pamixer plasma-pa
+------------------------------------------------------
+
+# !! /etc/alsa/state-daemon.conf is missed.
+# sudo nano /usr/lib/systemd/system/alsa-state.service
+
+# Note that two different ALSA card state management
+# schemes exist and they can be switched using a file
+# exist check - /etc/alsa/state-daemon.conf
+
+[Unit]
+Description=Manage Sound Card State (restore and store)
+# ConditionPathExists=/etc/alsa/state-daemon.conf
+# ConditionPathExists=!/etc/alsa/state-daemon.conf
+ConditionPathExists=@daemonswitch@
+After=sysinit.target
+
+[Service]
+Type=simple
+ExecStart=-/usr/bin/alsactl -s -n 19 -c rdaemon
+ExecStop=-/usr/bin/alsactl -s kill save_and_quit
+
+systemctl daemon-reload
+systemctl restart alsa-state.service
+
+reboot
 ```
 
 ### 【arch Linux】关机慢
