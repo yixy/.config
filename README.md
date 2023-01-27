@@ -256,6 +256,15 @@ sudo make clean install
 Xft.dpi: 192
 ```
 
+dwm状态更新。
+
+```shell
+mkdir ~/.scripts
+cd ~/.scripts
+wget https://github.com/yixy/.config/raw/main/.scripts/refresh.sh
+wget https://github.com/yixy/.config/raw/main/.scripts/dwm_status.sh
+```
+
 `nvim ~/.xinitrc`编辑启动配置
 
 ```shell
@@ -275,6 +284,8 @@ xrandr --output Virtual-1 --mode 3840x2160
 
 #apply hidp
 xrdb -merge ~/.Xresources
+
+bash ~/.scripts/refresh.sh &
 
 #启动dwm
 exec dwm
