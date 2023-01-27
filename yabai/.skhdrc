@@ -140,7 +140,7 @@
 
 # add by youzhilane
 # float / unfloat window and fill in screen
- alt - t : yabai -m window --toggle float;\
+ctrl - t : yabai -m window --toggle float;\
            yabai -m window --grid 1:1:0:0:1:1
 #4:4:1:1:2:2
 
@@ -157,10 +157,10 @@
 # add by youzhilane
 #
 # focus window(同一个空间切换窗口焦点)
-alt - h : yabai -m window --focus west
-alt - j : yabai -m window --focus south
-alt - k : yabai -m window --focus north
-alt - l : yabai -m window --focus east
+ctrl - h : yabai -m window --focus west
+ctrl - j : yabai -m window --focus south
+ctrl - k : yabai -m window --focus north
+ctrl - l : yabai -m window --focus east
 #
 # swap window(同一个空间调整窗口位置)
 shift + alt - h : yabai -m window --swap west
