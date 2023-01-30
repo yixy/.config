@@ -138,6 +138,8 @@ systemctl start sshd
 
 pacman -S man 
 pacman -S git
+#tk for gitk
+pacman -S tk
 pacman -S inetutils
 pacman -S keychain
 pacman -S wget

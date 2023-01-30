@@ -3,6 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 # add by youzhilane
+export ZSH="$HOME/.oh-my-zsh"
 source ~/.myenvrc
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -68,7 +69,7 @@ ZSH_THEME="ys"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git go python kubectl history zsh-autosuggestions)
+plugins=(git golang python kubectl history zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
