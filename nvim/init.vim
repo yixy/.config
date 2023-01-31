@@ -395,8 +395,10 @@ nmap <leader>rn <Plug>(coc-rename)
 
 " 格式化代码
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>f :call CocActionAsync('format')<CR>
+nmap <leader>f :call CocActionAsync('format')<CR>
 
 "代码折叠
 augroup mygroup
