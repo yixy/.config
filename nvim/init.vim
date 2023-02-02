@@ -24,9 +24,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'vim-plug']}
 "dart: for filetype detection and syntax highlighting"
 Plug 'dart-lang/dart-vim-plugin'
+"go: for build, run, debug
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end ()
-
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " common setting
