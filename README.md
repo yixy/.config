@@ -136,6 +136,10 @@ EDITOR=nvim visudo
 systemctl enable sshd
 systemctl start sshd
 
+#dhcpcd daemon
+systemctl enable dhcpcd
+systemctl start dhcpcd
+
 pacman -S man 
 pacman -S git
 #tk for gitk
@@ -258,15 +262,6 @@ sudo make clean install
 Xft.dpi: 192
 ```
 
-dwm状态更新。
-
-```shell
-mkdir ~/.scripts
-cd ~/.scripts
-wget https://github.com/yixy/.config/raw/main/.scripts/refresh.sh
-wget https://github.com/yixy/.config/raw/main/.scripts/dwm_status.sh
-```
-
 `nvim ~/.xinitrc`编辑启动配置
 
 ```shell
@@ -287,11 +282,26 @@ xrandr --output Virtual-1 --mode 3840x2160
 #apply hidp
 xrdb -merge ~/.Xresources
 
-bash ~/.scripts/refresh.sh &
-
 #启动dwm
 exec dwm
 
+```
+
+dwm状态更新。
+
+```shell
+mkdir ~/.scripts
+cd ~/.scripts
+wget https://github.com/yixy/.config/raw/main/.scripts/refresh.sh
+wget https://github.com/yixy/.config/raw/main/.scripts/dwm_status.sh
+
+mkdir ~/.dwm
+cd ~/.dwm
+wget https://github.com/yixy/.config/raw/main/.dwm/autostart.sh
+
+#nvim ~/.dwm/autostart.sh
+#add dwm status
+bash ~/.scripts/refresh.sh &
 ```
 
 启动窗口管理器。
@@ -337,8 +347,8 @@ fontconfig配置可参考双猫cc的文章： https://catcat.cc/post/2021-03-07/
 pacman -S fcitx5-im
 pacman -S fcitx5-chinese-addons
 
-#注意，开启fcixt输入法需要在`~/.xinitrc`中配置fcitx
-#nvim ~/.xinitrc
+#注意，开启fcixt输入法需要配置fcitx
+#nvim ~/.dwm/autostart.sh
 #add fcitx
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
@@ -372,7 +382,10 @@ cp /etc/xdg/picom.conf ~/.config
 #关闭fcitx5的透明效果
 #opacity-rule = ["100:class_g = 'fcitx'"]
 
-#open in xinitrc
+#nvim ~/.dwm/autostart.sh
+#add wallpapper when start
+nitrogen --random --set-scaled ~/.wallpaper
+picom &
 ```
 
 ## 3 zsh & oh-my-zsh
