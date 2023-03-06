@@ -626,6 +626,10 @@ systemctl enable systemd-resolved.service
 systemctl enable iwd
 ```
 
+```
+pacman -S wpa_supplicant
+```
+
 **6.安装配置引导加载程序**
 
 Apple’s native EFI boot loader reads .efi files located within the EFI system partition (/mnt/boot) at $ESP/EFI/BOOT/BOOTX64.EFI. Fortunately, this is also the default install location for the systemd-boot binary. This means that booting Arch Linux using systemd-boot is very simple.
