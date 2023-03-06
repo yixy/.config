@@ -484,6 +484,120 @@ pacman -S nodejs npm
 
 ## 7 trouble shooting
 
+### 【arch Linux】MacBookPro11,1安装 arch/macOS双系统
+
+主要参考Arch Linux安装官方文档 以及下面的文档：
+
+* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-1
+* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-2
+* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-3
+
+**1.动态调整分区**
+
+macOS更新为Big Sur最新版本。使用Disk Utility工具在左侧列中选择要分区的驱动器，点击分区（partition）。按+添加新分区，然后选择您给新分区多少空间。分区类型无关紧要，因为它在安装Arch Linux时会重新格式化，但最好将分区格式化为APFS，以免将分区与其他分区（即Windows 7分区）混淆。注意，此操作对磁盘空闲空间大小有要求，太小的话是不能动态拆分并添加分区的。此外，某些系统文件如果无法手工清理，可以使用`启动转换助理`进行清理（不用真的进行windows分区，在此之前会把timemachine的缓存清空）。
+
+**2.制作archlinux启动U盘**
+
+```shell
+diskutil list
+#在用dd写入块之前，您必须卸载（而不是弹出）它。
+diskutil unmountDisk /dev/diskX
+#将ISO映像文件复制到设备。dd命令与Linux命令相似，但请注意disk前的r。这是用于原始模式，这使得传输速度更快：
+dd if=path/to/arch.iso of=/dev/rdiskX bs=1m
+```
+重新启动Mac。按住Option（⌥）键，选择Arch Linux的可引导安装程序。
+
+**3.无线配置**
+
+针对无线连接，根据MacBookPro型号，可能拥有Broadcom BCM43602单芯片双频收发器，该收发器由开源brcm80211模块支持，该模块内置在Linux内核中，通常默认启用。其他BCM43XX芯片组可能仅由b43或Broadcom-wl等专有驱动程序支持。broadcom-wl软件包包含在Arch Linux安装程序中，但可能需要手动启用，然后芯片组才能正常工作。b43驱动程序也内置在内核中，并包含在安装介质中，但它需要来自b43固件AUR包的外部专有固件，该固件需要从连接到互联网的另一台机器下载。可以通过运行ip link show来列出安装程序环境中可用的网络接口。如果您可以在列表中看到您的无线接口（例如wlan0），您现在应该可以使用iwctl选择并连接到无线网络。如果虚拟环回接口是唯一列出的接口，您可能需要加载替代的Broadcom驱动程序。要做到这一点，首先要确保所有Broadcom驱动程序都已卸载。
+
+```
+rmmod b43
+rmmod bcma
+rmmod ssb
+rmmod wl
+```
+
+添加bcma模块：
+
+```
+modprobe bcma
+```
+
+如果仍然看不到无线接口，请删除bcma模块并添加wl模块：
+
+```
+rmmod bcma && modprobe wl
+使用iwctl连接到Wi-Fi。
+```
+
+**4.arch分区**
+
+参考官方文档对磁盘重新进行分区：
+
+* EFI系统（EFI系统分区）：不变
+* 苹果APFS（macOS）：不变
+* 苹果APFS（Arch Linux）：删除分区，重新建swap分区和Linux root（x86-64）分区
+
+注意，格式化时提供-L选项来设置标签,这在创建fstab文件和引导加载程序条目时很有用。
+
+```
+mkfs.ext4 /dev/<root_partition> -L "Arch"
+```
+
+**5.安装和配置引导加载程序**
+
+Apple’s native EFI boot loader reads .efi files located within the EFI system partition (/mnt/boot) at $ESP/EFI/BOOT/BOOTX64.EFI. Fortunately, this is also the default install location for the systemd-boot binary. This means that booting Arch Linux using systemd-boot is very simple.
+
+注意：EFI系统分区应挂载到/mnt/boot（新系统中的/boot）。
+
+注意：systemd-boot是支持UEFI的系统的推荐引导加载程序。
+
+确保安装了EFI系统分区：
+
+```
+ls /boot
+```
+
+将systemd-boot安装到EFI系统分区中：
+
+```
+bootctl install
+```
+
+此命令将systemd-boot安装到EFI系统分区中。systemd-boot的副本将存储为EFI默认/回退加载程序，位于$ESP/EFI/BOOT/BOOT*.EFI。然后，加载程序被添加到固件引导加载程序列表的顶部。
+
+配置systemd-boot。systemd-boot是一个简单的UEFI引导管理器，它执行已配置的EFI映像。默认条目由配置的模式（glob）或通过箭头键导航的屏幕菜单选择。它包含在systemd中，默认情况下安装在Arch Linux系统上。
+
+加载器配置存储在$ESP/loader/loader.conf文件中。
+
+$ESP/loader/loader.conf
+
+```
+default arch.conf
+timeout 3
+```
+
+systemd-boot将在$ESP/loader/entries/*.conf中搜索引导菜单项。
+
+$ESP/loader/entries/arch.conf
+
+```
+title      Arch Linux
+linux      /vmlinuz-linux
+initrd     /intel-ucode.img
+initrd     /initramfs-linux.img
+options    root="LABEL=Arch"
+```
+
+注意：示例条目文件位于/usr/share/systemd/bootctl/arch.conf。
+
+**6.启动**
+
+正常启动，通过UEFI可正常启动arch，但是选择macOS会报错。
+
+按住Option（⌥）键，选择MacintoshHD启动，这种方法可正常启动macOS。
+
 ### 【arch Linux】VirtualBox虚拟机安装
 
 可参考如下链接。
