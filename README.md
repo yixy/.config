@@ -545,7 +545,88 @@ rmmod bcma && modprobe wl
 mkfs.ext4 /dev/<root_partition> -L "Arch"
 ```
 
-**5.安装和配置引导加载程序**
+**5.系统安装完后对网络配置**
+
+> after `arch-chroot /mnt`.
+
+Create the hostname file:
+
+/etc/hostname
+
+```
+<hostname>
+```
+
+Create the hosts file:
+
+/etc/hosts
+
+```
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    <hostname>.localdomain    <hostname>
+```
+
+Note: The installation image uses systemd-networkd and systemd-resolved. systemd-networkd configures a DHCP client for wired and wireless network interfaces. These must be enabled and configured on the new system.
+
+Install iwd:
+
+```
+pacman -S iwd
+```
+
+Install broadcom-wl:
+
+```
+pacman -S broadcom-wl
+```
+
+Configure systemd-networkd:
+
+/etc/systemd/network/20-ethernet.network
+
+```
+[Match]
+Name=en*
+Name=eth*
+
+[Network]
+DHCP=yes
+IPv6PrivacyExtensions=yes
+
+[DHCP]
+RouteMetric=512
+```
+
+/etc/systemd/network/20-wireless.network
+
+```
+[Match]
+Name=wlp*
+Name=wlan*
+
+[Network]
+DHCP=yes
+IPv6PrivacyExtensions=yes
+
+[DHCP]
+RouteMetric=1024
+Configure systemd-resolved:
+```
+
+```
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+```
+
+Ensure systemd-networkd, systemd-resolved, and iwd start on boot:
+
+```
+systemctl enable systemd-networkd.service
+systemctl enable systemd-resolved.service
+systemctl enable iwd
+```
+
+**6.安装配置引导加载程序**
 
 Apple’s native EFI boot loader reads .efi files located within the EFI system partition (/mnt/boot) at $ESP/EFI/BOOT/BOOTX64.EFI. Fortunately, this is also the default install location for the systemd-boot binary. This means that booting Arch Linux using systemd-boot is very simple.
 
@@ -592,7 +673,7 @@ options    root="LABEL=Arch"
 
 注意：示例条目文件位于/usr/share/systemd/bootctl/arch.conf。
 
-**6.启动**
+**7.启动**
 
 正常启动，通过UEFI可正常启动arch，但是选择macOS会报错。
 
