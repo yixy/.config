@@ -569,10 +569,16 @@ Create the hosts file:
 
 Note: The installation image uses systemd-networkd and systemd-resolved. systemd-networkd configures a DHCP client for wired and wireless network interfaces. These must be enabled and configured on the new system.
 
-Install iwd:
+Install iwd:（iwd (iNet wireless daemon，iNet 无线守护程序) 是由英特尔（Intel）为 Linux 编写的一个无线网络守护程序。该项目的核心目标是不依赖任何外部库，而是最大程度地利用 Linux 内核提供的功能来优化资源利用。）
 
 ```
 pacman -S iwd
+```
+
+```
+# vi /var/lib/iwd/SSID.nettype（nettype is one of `.open`, `.psk`, `.8021x`.  eg. /var/lib/idw/xxxx.psk)
+[Security]
+Passphrase=wifi-passwd
 ```
 
 Install broadcom-wl:
