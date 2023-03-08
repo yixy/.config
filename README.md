@@ -488,6 +488,7 @@ pacman -S nodejs npm
 
 主要参考Arch Linux安装官方文档 以及下面的文档：
 
+* https://wiki.archlinux.org/title/MacBookPro11,x
 * https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-1
 * https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-2
 * https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-3
