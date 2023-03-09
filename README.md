@@ -170,6 +170,7 @@ cd yay
 makepkg -si
 # pacman -Qs yay
 
+pacman -S acpi
 ```
 
 ### systemd配置
