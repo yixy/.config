@@ -51,6 +51,8 @@ vim /etc/pacman.d/mirrorlist
 #查看IP
 ip adress show
 ```
+注意，安装完成后首次登录系统需进行网络配置，可参考后面的相关配置。
+
 ### Grub 安装
 
 AMD CPU
@@ -474,81 +476,7 @@ pacman -S nodejs npm
 
 打开nvim，通过`:PlugInstall`安装相关插件。
 
-## 6 macOS & IOS
-
-[mac系统偏好设置](/macos/01.mac系统偏好设置.md)
-
-[hombrew使用](/macos/02.hombrew使用.md)
-
-[mac常用软件](/macos/03.mac常用软件.md)
-
-[盒盖掉电问题](/macos/04.rmbp盒盖掉电问题.md)
-
-## 7 trouble shooting
-
-### 【arch Linux】MacBookPro11,1安装 arch/macOS双系统
-
-主要参考Arch Linux安装官方文档 以及下面的文档：
-
-* https://wiki.archlinux.org/title/MacBookPro11,x
-* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-1
-* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-2
-* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-3
-
-**1.动态调整分区**
-
-macOS更新为Big Sur最新版本。使用Disk Utility工具在左侧列中选择要分区的驱动器，点击分区（partition）。按+添加新分区，然后选择您给新分区多少空间。分区类型无关紧要，因为它在安装Arch Linux时会重新格式化，但最好将分区格式化为APFS，以免将分区与其他分区（即Windows 7分区）混淆。注意，此操作对磁盘空闲空间大小有要求，太小的话是不能动态拆分并添加分区的。此外，某些系统文件如果无法手工清理，可以使用`启动转换助理`进行清理（不用真的进行windows分区，在此之前会把timemachine的缓存清空）。
-
-**2.制作archlinux启动U盘**
-
-```shell
-diskutil list
-#在用dd写入块之前，您必须卸载（而不是弹出）它。
-diskutil unmountDisk /dev/diskX
-#将ISO映像文件复制到设备。dd命令与Linux命令相似，但请注意disk前的r。这是用于原始模式，这使得传输速度更快：
-dd if=path/to/arch.iso of=/dev/rdiskX bs=1m
-```
-重新启动Mac。按住Option（⌥）键，选择Arch Linux的可引导安装程序。
-
-**3.无线配置**
-
-针对无线连接，根据MacBookPro型号，可能拥有Broadcom BCM43602单芯片双频收发器，该收发器由开源brcm80211模块支持，该模块内置在Linux内核中，通常默认启用。其他BCM43XX芯片组可能仅由b43或Broadcom-wl等专有驱动程序支持。broadcom-wl软件包包含在Arch Linux安装程序中，但可能需要手动启用，然后芯片组才能正常工作。b43驱动程序也内置在内核中，并包含在安装介质中，但它需要来自b43固件AUR包的外部专有固件，该固件需要从连接到互联网的另一台机器下载。可以通过运行ip link show来列出安装程序环境中可用的网络接口。如果您可以在列表中看到您的无线接口（例如wlan0），您现在应该可以使用iwctl选择并连接到无线网络。如果虚拟环回接口是唯一列出的接口，您可能需要加载替代的Broadcom驱动程序。要做到这一点，首先要确保所有Broadcom驱动程序都已卸载。
-
-```
-rmmod b43
-rmmod bcma
-rmmod ssb
-rmmod wl
-```
-
-添加bcma模块：
-
-```
-modprobe bcma
-```
-
-如果仍然看不到无线接口，请删除bcma模块并添加wl模块：
-
-```
-rmmod bcma && modprobe wl
-使用iwctl连接到Wi-Fi。
-```
-
-**4.arch分区**
-
-参考官方文档对磁盘重新进行分区：
-
-* EFI系统（EFI系统分区）：不变
-* 苹果APFS（macOS）：不变
-* 苹果APFS（Arch Linux）：删除分区，重新建swap分区和Linux root（x86-64）分区
-
-注意，格式化时提供-L选项来设置标签,这在创建fstab文件和引导加载程序条目时很有用。
-
-```
-mkfs.ext4 /dev/<root_partition> -L "Arch"
-```
-
-**5.系统安装完后对网络配置**
+## 6.系统安装完后对网络配置
 
 > after `arch-chroot /mnt`.
 
@@ -639,7 +567,114 @@ systemctl enable iwd
 pacman -S wpa_supplicant
 ```
 
-**6.安装配置引导加载程序**
+## 7 sound 配置
+
+参考官网wiki： https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture
+
+高级 Linux 声音体系（Advanced Linux Sound Architecture，ALSA）是Linux中提供声音设备驱动的内核组件，用来代替原来的开放声音系统（Open Sound System，OSSv3）。除了声音设备驱动，ALSA还包含一个用户空间的函数库，以方便开发者通过高级API使用驱动功能，而不必直接与内核驱动交互。Arch 默认的内核已经通过一套模块提供了 ALSA，不必特别安装。udev会在系统启动时自动检测硬件，并加载相应的声音设备驱动模块。这时，你的声卡已经可以工作了，只是所有声道默认都被设置成静音了。
+
+```shell
+#交互式命令关闭静音，调整音量大小
+#在 alsamixer 中，下方标有 MM 的声道是静音的，而标有 00 的通道已经启用。使用 ← 和 → 方向键，选中 Master 和 PCM 声道。按下 m 键解除静音。使用 ↑ 方向键增加音量，直到增益值为0。该值显示在左上方 Item: 字段后。过高的增益值会导致声音失真。
+alsamixer
+```
+
+使用alsamixer设置之后还是没有声音，则有可能网卡默认配置有误。
+
+```shell
+#查看网卡的声卡ID和设备ID
+aplay -l
+#查看默认网卡信息
+amixer scontrols
+#查看0和1号网卡信息
+amixer -c 0 scontrols
+amixer -c 1 scontrols
+```
+
+系统级别 /etc/asound.conf ，用户级别 ~/.asoundrc 配置。
+
+```shell
+#eg 网卡0，设备1
+defaults.pcm.card 1
+defaults.pcm.device 0
+defaults.ctl.card 1
+```
+
+## 8 macOS & IOS
+
+[mac系统偏好设置](/macos/01.mac系统偏好设置.md)
+
+[hombrew使用](/macos/02.hombrew使用.md)
+
+[mac常用软件](/macos/03.mac常用软件.md)
+
+[盒盖掉电问题](/macos/04.rmbp盒盖掉电问题.md)
+
+## 9 trouble shooting
+
+### 【arch Linux】MacBookPro11,1安装 arch/macOS双系统
+
+主要参考Arch Linux安装官方文档 以及下面的文档：
+
+* https://wiki.archlinux.org/title/MacBookPro11,x
+* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-1
+* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-2
+* https://nickolaskraus.io/articles/installing-arch-linux-on-a-macbookpro-part-3
+
+**1.动态调整分区**
+
+macOS更新为Big Sur最新版本。使用Disk Utility工具在左侧列中选择要分区的驱动器，点击分区（partition）。按+添加新分区，然后选择您给新分区多少空间。分区类型无关紧要，因为它在安装Arch Linux时会重新格式化，但最好将分区格式化为APFS，以免将分区与其他分区（即Windows 7分区）混淆。注意，此操作对磁盘空闲空间大小有要求，太小的话是不能动态拆分并添加分区的。此外，某些系统文件如果无法手工清理，可以使用`启动转换助理`进行清理（不用真的进行windows分区，在此之前会把timemachine的缓存清空）。
+
+**2.制作archlinux启动U盘**
+
+```shell
+diskutil list
+#在用dd写入块之前，您必须卸载（而不是弹出）它。
+diskutil unmountDisk /dev/diskX
+#将ISO映像文件复制到设备。dd命令与Linux命令相似，但请注意disk前的r。这是用于原始模式，这使得传输速度更快：
+dd if=path/to/arch.iso of=/dev/rdiskX bs=1m
+```
+重新启动Mac。按住Option（⌥）键，选择Arch Linux的可引导安装程序。
+
+**3.无线配置**
+
+针对无线连接，根据MacBookPro型号，可能拥有Broadcom BCM43602单芯片双频收发器，该收发器由开源brcm80211模块支持，该模块内置在Linux内核中，通常默认启用。其他BCM43XX芯片组可能仅由b43或Broadcom-wl等专有驱动程序支持。broadcom-wl软件包包含在Arch Linux安装程序中，但可能需要手动启用，然后芯片组才能正常工作。b43驱动程序也内置在内核中，并包含在安装介质中，但它需要来自b43固件AUR包的外部专有固件，该固件需要从连接到互联网的另一台机器下载。可以通过运行ip link show来列出安装程序环境中可用的网络接口。如果您可以在列表中看到您的无线接口（例如wlan0），您现在应该可以使用iwctl选择并连接到无线网络。如果虚拟环回接口是唯一列出的接口，您可能需要加载替代的Broadcom驱动程序。要做到这一点，首先要确保所有Broadcom驱动程序都已卸载。
+
+```
+rmmod b43
+rmmod bcma
+rmmod ssb
+rmmod wl
+```
+
+添加bcma模块：
+
+```
+modprobe bcma
+```
+
+如果仍然看不到无线接口，请删除bcma模块并添加wl模块：
+
+```
+rmmod bcma && modprobe wl
+使用iwctl连接到Wi-Fi。
+```
+
+**4.arch分区**
+
+参考官方文档对磁盘重新进行分区：
+
+* EFI系统（EFI系统分区）：不变
+* 苹果APFS（macOS）：不变
+* 苹果APFS（Arch Linux）：删除分区，重新建swap分区和Linux root（x86-64）分区
+
+注意，格式化时提供-L选项来设置标签,这在创建fstab文件和引导加载程序条目时很有用。
+
+```
+mkfs.ext4 /dev/<root_partition> -L "Arch"
+```
+
+**5.安装配置引导加载程序**
 
 Apple’s native EFI boot loader reads .efi files located within the EFI system partition (/mnt/boot) at $ESP/EFI/BOOT/BOOTX64.EFI. Fortunately, this is also the default install location for the systemd-boot binary. This means that booting Arch Linux using systemd-boot is very simple.
 
@@ -686,9 +721,9 @@ options    root="LABEL=Arch"
 
 注意：示例条目文件位于/usr/share/systemd/bootctl/arch.conf。
 
-**7.启动**
+**6.启动**
 
-正常启动，通过UEFI可正常启动arch，但是选择macOS会报错。
+正常启动，通过UEFI可正常启动arch。
 
 按住Option（⌥）键，选择MacintoshHD启动，这种方法可正常启动macOS。
 

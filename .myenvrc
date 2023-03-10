@@ -3,6 +3,7 @@ alias vpn='export http_proxy="http://127.0.0.1:8001"; export HTTP_PROXY="http://
 alias novpn='export http_proxy=""; export HTTP_PROXY=""; export https_proxy=""; export HTTPS_PROXY=""'
 
 alias vim='nvim'
+alias sl='slock'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
 
