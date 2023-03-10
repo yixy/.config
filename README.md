@@ -601,8 +601,22 @@ defaults.pcm.card 1
 defaults.pcm.device 0
 defaults.ctl.card 1
 ```
+## 8 screen backlight & keyboad backlight
 
-## 8 macOS & IOS
+以macbookpro11,1为例，屏幕背光和键盘背光值可在如下目录中的找到。
+
+```shell
+$ cat /sys/class/backlight/acpi_video0/brightness
+10
+
+$ cat /sys/class/leds/smc::kbd_backlight/brightness
+100
+```
+屏幕背光自动调整问题可参考：
+
+https://harttle.land/2019/10/13/archlinux-backlight.html
+
+## 9 macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
 
@@ -612,7 +626,7 @@ defaults.ctl.card 1
 
 [盒盖掉电问题](/macos/04.rmbp盒盖掉电问题.md)
 
-## 9 trouble shooting
+## 10 trouble shooting
 
 ### 【arch Linux】MacBookPro11,1安装 arch/macOS双系统
 
