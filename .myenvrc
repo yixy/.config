@@ -6,5 +6,11 @@ alias vim='nvim'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
 
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
+
 eval $(keychain --eval --quiet ~/.ssh/id_rsa)
 

@@ -348,15 +348,16 @@ fontconfig配置可参考双猫cc的文章： https://catcat.cc/post/2021-03-07/
 pacman -S fcitx5-im
 pacman -S fcitx5-chinese-addons
 
+#add to env
+#export GTK_IM_MODULE=fcitx
+#export QT_IM_MODULE=fcitx
+#export XMODIFIERS=@im=fcitx
+#export SDL_IM_MODULE=fcitx
+#export GLFW_IM_MODULE=ibus
+
 #注意，开启fcixt输入法需要配置fcitx
 #nvim ~/.dwm/autostart.sh
 #add fcitx
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export SDL_IM_MODULE=fcitx
-export GLFW_IM_MODULE=ibus
-
 fcitx5 -d
 ```
 
