@@ -574,6 +574,8 @@ pacman -S wpa_supplicant
 高级 Linux 声音体系（Advanced Linux Sound Architecture，ALSA）是Linux中提供声音设备驱动的内核组件，用来代替原来的开放声音系统（Open Sound System，OSSv3）。除了声音设备驱动，ALSA还包含一个用户空间的函数库，以方便开发者通过高级API使用驱动功能，而不必直接与内核驱动交互。Arch 默认的内核已经通过一套模块提供了 ALSA，不必特别安装。udev会在系统启动时自动检测硬件，并加载相应的声音设备驱动模块。这时，你的声卡已经可以工作了，只是所有声道默认都被设置成静音了。
 
 ```shell
+pacman -S alsa-utils
+
 #交互式命令关闭静音，调整音量大小
 #在 alsamixer 中，下方标有 MM 的声道是静音的，而标有 00 的通道已经启用。使用 ← 和 → 方向键，选中 Master 和 PCM 声道。按下 m 键解除静音。使用 ↑ 方向键增加音量，直到增益值为0。该值显示在左上方 Item: 字段后。过高的增益值会导致声音失真。
 alsamixer
