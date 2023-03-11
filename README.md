@@ -616,7 +616,16 @@ $ cat /sys/class/leds/smc::kbd_backlight/brightness
 
 https://harttle.land/2019/10/13/archlinux-backlight.html
 
-## 9 macOS & IOS
+## 9 Java environment
+
+```shell
+$ sudo pacman -S jdk19-openjdk
+$ sudo pacman -S jdk8-openjdk
+#using archlinux-java set to specify the jdk
+```
+
+<++>
+## macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
 
@@ -626,7 +635,7 @@ https://harttle.land/2019/10/13/archlinux-backlight.html
 
 [盒盖掉电问题](/macos/04.rmbp盒盖掉电问题.md)
 
-## 10 trouble shooting
+## trouble shooting
 
 ### 【arch Linux】MacBookPro11,1安装 arch/macOS双系统
 
