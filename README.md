@@ -616,7 +616,49 @@ $ cat /sys/class/leds/smc::kbd_backlight/brightness
 
 https://harttle.land/2019/10/13/archlinux-backlight.html
 
-## 9 Java environment
+## 9 touchpad
+
+参考：https://harttle.land/2019/05/01/linux-macbook-trackpad-settings.html
+
+```shell
+yay -S xf86-input-mtrack
+```
+
+执行 xinput，找到设备 ID。本例中为11。
+
+```shell
+$ xinput
+⎡ Virtual core pointer                          id=2    [master pointer  (3)]
+⎜   ↳ Virtual core XTEST pointer                id=4    [slave  pointer  (2)]
+⎜   ↳ bcm5974                                   id=11   [slave  pointer  (2)]
+⎣ Virtual core keyboard                         id=3    [master keyboard (2)]
+    ↳ Virtual core XTEST keyboard               id=5    [slave  keyboard (3)]
+    ↳ Power Button                              id=6    [slave  keyboard (3)]
+    ↳ Video Bus                                 id=7    [slave  keyboard (3)]
+    ↳ Power Button                              id=8    [slave  keyboard (3)]
+    ↳ Sleep Button                              id=9    [slave  keyboard (3)]
+    ↳ Apple Inc. Apple Internal Keyboard / Trackpad     id=10   [slave  keyboard (3)]
+```
+
+执行`xinput list-props 11`可以查看相应的驱动参数，如下面例子中的301和309参数。
+
+将相应参数配置持久化有两种方式：
+
+1. 把 xinput 命令放到 .xinitrc 中，或者某种 autostart 中。
+2. 把上述属性配置到 /etc/X11/xorg.conf.d/*.conf 中。——MacBookPro11,1不生效，待解决。
+
+以xinput命令为例：
+
+```shell
+#nvim ~/.xinitrc
+#轻触点击
+xinput set-prop 11 301 1
+#自然滚动
+xinput set-prop 11 309 1
+#三指拖拽待解决。。。
+```
+
+## 10 Java environment
 
 ```shell
 $ sudo pacman -S jdk19-openjdk
@@ -624,7 +666,6 @@ $ sudo pacman -S jdk8-openjdk
 #using archlinux-java set to specify the jdk
 ```
 
-<++>
 ## macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
