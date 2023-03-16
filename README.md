@@ -172,6 +172,20 @@ cd yay
 makepkg -si
 # pacman -Qs yay
 
+
+#Install the tlp package. Installing the optional dependencies may help provide additional power saving.
+#
+#Enable/start tlp.service.
+#
+#One should also mask the service systemd-rfkill.service and socket systemd-rfkill.socket to avoid conflicts and assure proper operation of TLP's radio device switching options.
+pacman -S tlp tlp-rdw
+systemctl enable NetworkManager-dispatcher.service
+systemctl start NetworkManager-dispatcher.service
+systemctl enable tlp.service
+systemctl start tlp.service
+systemctl stop systemd-rfkill.service systemd-rfkill.socket
+systemctl mask systemd-rfkill.service systemd-rfkill.socket
+
 pacman -S acpi
 ```
 
