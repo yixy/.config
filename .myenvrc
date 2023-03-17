@@ -3,7 +3,7 @@ alias vpn='export http_proxy="http://127.0.0.1:8001"; export HTTP_PROXY="http://
 alias novpn='export http_proxy=""; export HTTP_PROXY=""; export https_proxy=""; export HTTPS_PROXY=""'
 
 alias vim='nvim'
-alias sl='slock'
+alias wl='iwctl station wlan0 scan;sleep 3; iwctl station wlan0 connect'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
 
@@ -15,6 +15,8 @@ export GLFW_IM_MODULE=ibus
 
 export GOPATH=~/go
 export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOBIN
+export GRAALVM_HOME=~/sdk/graalvm-ce-java17-22.3.1
+export JAVA_HOME=~/sdk/graalvm-ce-java17-22.3.1
+export PATH=$PATH:$GOBIN:$GRAALVM_HOME/bin
 eval $(keychain --eval --quiet ~/.ssh/id_rsa)
 

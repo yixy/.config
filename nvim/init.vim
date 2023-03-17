@@ -20,6 +20,7 @@ Plug 'preservim/nerdtree'
 "代码补全
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "markdown
+Plug 'tpope/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'vim-plug']}
 "dart: for filetype detection and syntax highlighting"
@@ -85,16 +86,28 @@ let mapleader=" "
 map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
 
 "copy data between different vim instance
-vmap <LEADER>y :w! /tmp/neovimtmp<CR>
-nmap <LEADER>p :r! cat /tmp/neovimtmp<CR>
+"using tmpfile
+"vmap <LEADER>y :w! /tmp/neovimtmp<CR>
+"nmap <LEADER>p :r! cat /tmp/neovimtmp<CR>
+"using x11 selection clipboard
+"PRIMARY:Used for the currently selected text, even if it is not explicitly copied, and for middle-mouse-click pasting. In some cases, pasting is also possible with a keyboard shortcut.
+"CLIPBOARD:Used for explicit copy/paste commands involving keyboard shortcuts or menu items. Hence, it behaves like the single-clipboard system on Windows. Unlike PRIMARY, it can also handle multiple data formats.
+map <LEADER>y y:!xclip -o -selection primary   \| xclip -i -selection clipboard<CR><CR>
+nmap <LEADER>p :!xclip -o -selection clipboard \| xclip -i -selection primary<CR><ESC>p
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme molokai
+
 "终端支持256种颜色
 set t_Co=256
+" visual mode: select color
 hi Visual ctermbg=30
+"comment highlight
+hi comment ctermfg=100
+hi title ctermfg=1
+hi quote ctermfg=70
 "背景透明
 hi Normal guibg=NONE ctermbg=NONE
 
@@ -110,7 +123,7 @@ let &t_ut=''
 set list
 set listchars=tab:▸\ ,trail:▫
 "光标下方总是保留5行展示
-set scrolloff=5
+set scrolloff=7
 "vim默认为vim配置脚本设置了textwidth为78,当输入超过78个字符并按下空格键时会自动换行.将textwidth设成0关闭该功能
 set tw=0
 "缩进风格
@@ -184,6 +197,12 @@ map tl :+tabnext<CR>
 " ? for help
 map tt :NERDTree<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" markdown plugin: tpope/vim-markdown
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:markdown_fenced_languages = ['xml', 'c', 'go', 'java', 'rust', 'html', 'python', 'bash=sh']
+"let g:markdown_syntax_conceal = 0
+let g:markdown_minlines = 100
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown plugin: markdown-preview.nvim

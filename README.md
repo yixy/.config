@@ -27,7 +27,7 @@ archive:
 
 ### 网络配置
 
-```shell
+```bash
 #查找当前网络设备
 ip link
 
@@ -57,7 +57,7 @@ ip adress show
 
 AMD CPU
 
-```shell
+```bash
 pacman -S amd-ucode
 ```
 
@@ -69,7 +69,7 @@ pacman -S intel-ucode
 
 参考官方文档，若主板系统是 BIOS，就使用 MBR 分区格式。若为EFI则使用GPT 。
 
-```shell
+```bash
 #BIOS
 pacman -S grub
 grub-install --target=i386-pc /dev/sda
@@ -85,7 +85,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot
 
 ### 滚动更新
 
-```shell
+```bash
 # 搜索可更新软件
 # pacman -Ss xxx
 # 新增
@@ -124,7 +124,7 @@ sudo pacman -Rns $(pacman -Qdtq)
 
 ### 常用软件 & 用户权限
 
-```shell
+```bash
 pacman -S openssh
 pacman -S neovim
 pacman -S sudo
@@ -193,7 +193,7 @@ pacman -S acpi
 
 参考 https://wiki.archlinuxcn.org/wiki/Systemd
 
-```shell
+```bash
 #例子，v2ray已经安装过，不用重复配置systemd了
 #sudo nvim /etc/systemd/system/v2ray.service
 [Unit]
@@ -216,7 +216,7 @@ WantedBy=multi-user.target
 
 setting service.
 
-```shell
+```bash
 #reload daemon
 systemctl daemon-reload
 
@@ -226,7 +226,7 @@ systemctl enable v2ray.service
 
 ### fix EFI booting
 
-```shell
+```bash
 mount FS0
 FS0:
 cd EFI/arch
@@ -249,7 +249,7 @@ xorg是X Server的一个实现。
 linux OS<--X服务器<--[通过X协议交互]-->窗口管理器/综合桌面环境(包含窗口管理器)-->X应用程序. 
 ```
 
-```shell
+```bash
 pacman -S xorg xorg-server xorg-apps xorg-xinit
 pacman -S lightdm 
 pacman -S lightdm-gtk-greeter lightdm-gtk-greeter-settings
@@ -261,7 +261,7 @@ pacman -S lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
 参考官方文档： https://suckless.org
 
-```shell
+```bash
 # install dwm
 git clone git@github.com:yixy/dwm.git
 sudo make clean install 
@@ -273,7 +273,7 @@ sudo make clean install
 
 `nvim ~/.Xresources`配置xorg hidp
 
-```shell
+```bash
 #4k显示器的hidp设置
 #e.g. 192 for 200% scaling.
 Xft.dpi: 192
@@ -281,7 +281,7 @@ Xft.dpi: 192
 
 `nvim ~/.xinitrc`编辑启动配置
 
-```shell
+```bash
 # 查看分辨率
 #xrandr
 # 设置分辨率模式
@@ -306,7 +306,7 @@ exec dwm
 
 dwm状态更新。
 
-```shell
+```bash
 mkdir ~/.scripts
 cd ~/.scripts
 wget https://github.com/yixy/.config/raw/main/.scripts/refresh.sh
@@ -323,7 +323,7 @@ bash ~/.scripts/refresh.sh &
 
 启动窗口管理器。
 
-```shell
+```bash
 startx
 ```
 
@@ -331,7 +331,7 @@ startx
 
 配置字体。
 
-```shell
+```bash
 #查看支持的字体
 fc-match -a
 
@@ -346,7 +346,7 @@ pacman -S noto-fonts noto-fonts-cjk
 
 `nvim /etc/locale.gen`配置语言。
 
-```shell
+```bash
 zh_CN.UTF-8 UTF-8
 en_US.UTF-8 UTF-8  
 ```
@@ -359,7 +359,7 @@ fontconfig配置可参考双猫cc的文章： https://catcat.cc/post/2021-03-07/
 
 配置输入法。 参考 https://wiki.archlinux.org/title/Fcitx5
 
-```shell
+```bash
 # im include qt & gtk
 pacman -S fcitx5-im
 pacman -S fcitx5-chinese-addons
@@ -379,7 +379,7 @@ fcitx5 -d
 
 进行配置。
 
-```shell
+```bash
 fcitx5-configtool
 ```
 
@@ -387,7 +387,7 @@ fcitx5-configtool
 
 壁纸资源： https://wallpapertag.com/
 
-```shell
+```bash
 #wallpaper manage
 pacman -S nitrogen
 #合成管理器，为不带合成管理器的窗口带来透明效果
@@ -410,21 +410,21 @@ picom &
 
 安装并切换到zsh
 
-```shell
+```bash
 pacman -S zsh
 chsh -s /bin/zsh
 ```
 
 安装oh-my-zsh
 
-```shell
+```bash
 #https://ohmyz.sh/#install
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
 配置oh-my-zsh
 
-```shell
+```bash
 #配置文件
 cd ~
 mv .zshrc .zshrc_bak
@@ -448,7 +448,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 
 ## 4 ranger
 
-```shell
+```bash
 pacman -S ranger
 
 #生成默认配置文件
@@ -467,7 +467,8 @@ diff rc.conf rc.conf_bak
 
 配置nvim
 
-```shell
+```bash
+pacman -S xclip
 #pacman -S neovim
 cd ~/.config/nvim/
 wget https://github.com/yixy/.config/raw/main/nvim/init.vim
@@ -476,7 +477,7 @@ wget https://github.com/yixy/.config/raw/main/nvim/coc-settings.json
 
 安装vim-plug
 
-```shell
+```bash
 #https://github.com/junegunn/vim-plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -484,7 +485,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 
 安装nodejs和npm（coc的依赖）
 
-```shell
+```bash
 pacman -S nodejs npm
 ```
 
@@ -587,7 +588,7 @@ pacman -S wpa_supplicant
 
 高级 Linux 声音体系（Advanced Linux Sound Architecture，ALSA）是Linux中提供声音设备驱动的内核组件，用来代替原来的开放声音系统（Open Sound System，OSSv3）。除了声音设备驱动，ALSA还包含一个用户空间的函数库，以方便开发者通过高级API使用驱动功能，而不必直接与内核驱动交互。Arch 默认的内核已经通过一套模块提供了 ALSA，不必特别安装。udev会在系统启动时自动检测硬件，并加载相应的声音设备驱动模块。这时，你的声卡已经可以工作了，只是所有声道默认都被设置成静音了。
 
-```shell
+```bash
 pacman -S alsa-utils
 
 #交互式命令关闭静音，调整音量大小
@@ -597,7 +598,7 @@ alsamixer
 
 使用alsamixer设置之后还是没有声音，则有可能网卡默认配置有误。
 
-```shell
+```bash
 #查看网卡的声卡ID和设备ID
 aplay -l
 #查看默认网卡信息
@@ -609,7 +610,7 @@ amixer -c 1 scontrols
 
 系统级别 /etc/asound.conf ，用户级别 ~/.asoundrc 配置。
 
-```shell
+```bash
 #eg 网卡0，设备1
 defaults.pcm.card 1
 defaults.pcm.device 0
@@ -619,7 +620,7 @@ defaults.ctl.card 1
 
 以macbookpro11,1为例，屏幕背光和键盘背光值可在如下目录中的找到。
 
-```shell
+```bash
 $ cat /sys/class/backlight/acpi_video0/brightness
 10
 
@@ -634,13 +635,13 @@ https://harttle.land/2019/10/13/archlinux-backlight.html
 
 参考：https://harttle.land/2019/05/01/linux-macbook-trackpad-settings.html
 
-```shell
+```bash
 yay -S xf86-input-mtrack
 ```
 
 执行 xinput，找到设备 ID。本例中为11。
 
-```shell
+```bash
 $ xinput
 ⎡ Virtual core pointer                          id=2    [master pointer  (3)]
 ⎜   ↳ Virtual core XTEST pointer                id=4    [slave  pointer  (2)]
@@ -663,7 +664,7 @@ $ xinput
 
 以xinput命令为例：
 
-```shell
+```bash
 #nvim ~/.xinitrc
 #轻触点击
 xinput set-prop 11 301 1
@@ -674,7 +675,7 @@ xinput set-prop 11 309 1
 
 ## 10 Java environment
 
-```shell
+```bash
 $ sudo pacman -S jdk19-openjdk
 $ sudo pacman -S jdk8-openjdk
 #using archlinux-java set to specify the jdk
@@ -707,7 +708,7 @@ macOS更新为Big Sur最新版本。使用Disk Utility工具在左侧列中选�
 
 **2.制作archlinux启动U盘**
 
-```shell
+```bash
 diskutil list
 #在用dd写入块之前，您必须卸载（而不是弹出）它。
 diskutil unmountDisk /dev/diskX
@@ -791,7 +792,7 @@ systemd-boot将在$ESP/loader/entries/*.conf中搜索引导菜单项。
 
 $ESP/loader/entries/arch.conf
 
-```
+```bash
 title      Arch Linux
 linux      /vmlinuz-linux
 initrd     /intel-ucode.img
@@ -823,7 +824,7 @@ https://wiki.archlinux.org/title/Parallels_Desktop
 
 安装Parallels Tool
 
-```shell
+```bash
 #Mac Dir: /Applications/Parallels\ Desktop.app/Contents/Resources/Tools/prl-tools-lin.iso
 mount /dev/cdrom /mnt/cdrom
 pacman -S linux-headers
@@ -834,7 +835,7 @@ cd /mnt/cdrom
 
 视频播放无声音，可安装如下驱动。
 
-```shell
+```bash
 $ sudo pacman -S alsa-utils alsa-firmaware
 $ sudo pacman -S pulseaudio pulseaudio-alsa
 $ sudo pacman -S pamixer plasma-pa
@@ -867,7 +868,7 @@ reboot
 
 ### 【arch Linux】关机慢
 
-```shell
+```bash
 #nvim /etc/systemd/system.conf
 DefaultTimeoutStartSec=10s
 DefaultTiemoutStopSec=10s
