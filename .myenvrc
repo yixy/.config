@@ -19,6 +19,8 @@ export GRAALVM_HOME=~/sdk/graalvm-ce-java17-22.3.1
 export JAVA_HOME=~/sdk/graalvm-ce-java17-22.3.1
 export PATH=$PATH:$GOBIN:$GRAALVM_HOME/bin
 
+export EDITOR=nvim
+
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
@@ -27,4 +29,4 @@ export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
 #eval $(keychain --eval --quiet ~/.ssh/id_rsa)
-#eval $(keychain --eval --quiet --agents gpg youzhilane)
+#eval $(keychain --eval --quiet --agents gpg Alice)
