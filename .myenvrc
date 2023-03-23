@@ -3,7 +3,7 @@ alias vpn='export http_proxy="http://127.0.0.1:8001"; export HTTP_PROXY="http://
 alias novpn='export http_proxy=""; export HTTP_PROXY=""; export https_proxy=""; export HTTPS_PROXY=""'
 
 alias vim='nvim'
-alias wl='iwctl station wlan0 scan;sleep 3; iwctl station wlan0 connect'
+alias wl='sudo systemctl restart iwd.service ;sudo systemctl restart systemd-resolved.service;sudo systemctl restart systemd-networkd.service;sudo systemctl restart dhcpcd.service'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
 

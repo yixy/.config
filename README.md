@@ -235,7 +235,98 @@ grubx64.efi
 #reinstall grub
 ```
 
-## 2 xorg & dwm & st
+## 2. 系统安装完后对网络配置
+
+> after `arch-chroot /mnt`.
+
+Create the hostname file:
+
+/etc/hostname
+
+```
+<hostname>
+```
+
+Create the hosts file:
+
+/etc/hosts
+
+```
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    <hostname>.localdomain    <hostname>
+```
+
+Note: The installation image uses systemd-networkd and systemd-resolved. systemd-networkd configures a DHCP client for wired and wireless network interfaces. These must be enabled and configured on the new system.
+
+Install iwd:（iwd (iNet wireless daemon，iNet 无线守护程序) 是由英特尔（Intel）为 Linux 编写的一个无线网络守护程序。该项目的核心目标是不依赖任何外部库，而是最大程度地利用 Linux 内核提供的功能来优化资源利用。）
+
+```
+pacman -S iwd
+```
+
+```
+# vi /var/lib/iwd/SSID.nettype（nettype is one of `.open`, `.psk`, `.8021x`.  eg. /var/lib/idw/xxxx.psk)
+[Security]
+Passphrase=wifi-passwd
+```
+
+Install broadcom-wl:
+
+```
+pacman -S broadcom-wl
+```
+
+Configure systemd-networkd:
+
+/etc/systemd/network/20-ethernet.network
+
+```
+[Match]
+Name=en*
+Name=eth*
+
+[Network]
+DHCP=yes
+IPv6PrivacyExtensions=yes
+
+[DHCP]
+RouteMetric=512
+```
+
+/etc/systemd/network/20-wireless.network
+
+```
+[Match]
+Name=wlp*
+Name=wlan*
+
+[Network]
+DHCP=yes
+IPv6PrivacyExtensions=yes
+
+[DHCP]
+RouteMetric=1024
+Configure systemd-resolved:
+```
+
+```
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+```
+
+Ensure systemd-networkd, systemd-resolved, and iwd start on boot:
+
+```
+systemctl enable systemd-networkd.service
+systemctl enable systemd-resolved.service
+systemctl enable iwd
+```
+
+```
+pacman -S wpa_supplicant
+```
+
+## 3 xorg & dwm & st
 
 ### 安装xorg
 
@@ -406,7 +497,7 @@ nitrogen --random --set-scaled ~/.wallpaper
 picom &
 ```
 
-## 3 zsh & oh-my-zsh
+## 4 zsh & oh-my-zsh
 
 安装并切换到zsh
 
@@ -446,7 +537,7 @@ wget https://github.com/yixy/.config/raw/main/.Xresources
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
-## 4 ranger
+## 5 ranger
 
 ```bash
 pacman -S ranger
@@ -463,7 +554,7 @@ diff rifle.conf rifle.conf_bak
 diff rc.conf rc.conf_bak
 ```
 
-## 5 nvim
+## 6 nvim
 
 配置nvim
 
@@ -490,97 +581,6 @@ pacman -S nodejs npm
 ```
 
 打开nvim，通过`:PlugInstall`安装相关插件。
-
-## 6.系统安装完后对网络配置
-
-> after `arch-chroot /mnt`.
-
-Create the hostname file:
-
-/etc/hostname
-
-```
-<hostname>
-```
-
-Create the hosts file:
-
-/etc/hosts
-
-```
-127.0.0.1    localhost
-::1          localhost
-127.0.1.1    <hostname>.localdomain    <hostname>
-```
-
-Note: The installation image uses systemd-networkd and systemd-resolved. systemd-networkd configures a DHCP client for wired and wireless network interfaces. These must be enabled and configured on the new system.
-
-Install iwd:（iwd (iNet wireless daemon，iNet 无线守护程序) 是由英特尔（Intel）为 Linux 编写的一个无线网络守护程序。该项目的核心目标是不依赖任何外部库，而是最大程度地利用 Linux 内核提供的功能来优化资源利用。）
-
-```
-pacman -S iwd
-```
-
-```
-# vi /var/lib/iwd/SSID.nettype（nettype is one of `.open`, `.psk`, `.8021x`.  eg. /var/lib/idw/xxxx.psk)
-[Security]
-Passphrase=wifi-passwd
-```
-
-Install broadcom-wl:
-
-```
-pacman -S broadcom-wl
-```
-
-Configure systemd-networkd:
-
-/etc/systemd/network/20-ethernet.network
-
-```
-[Match]
-Name=en*
-Name=eth*
-
-[Network]
-DHCP=yes
-IPv6PrivacyExtensions=yes
-
-[DHCP]
-RouteMetric=512
-```
-
-/etc/systemd/network/20-wireless.network
-
-```
-[Match]
-Name=wlp*
-Name=wlan*
-
-[Network]
-DHCP=yes
-IPv6PrivacyExtensions=yes
-
-[DHCP]
-RouteMetric=1024
-Configure systemd-resolved:
-```
-
-```
-ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-```
-
-Ensure systemd-networkd, systemd-resolved, and iwd start on boot:
-
-```
-systemctl enable systemd-networkd.service
-systemctl enable systemd-resolved.service
-systemctl enable iwd
-```
-
-```
-pacman -S wpa_supplicant
-```
 
 ## 7 sound 配置
 
@@ -679,6 +679,39 @@ xinput set-prop 11 309 1
 $ sudo pacman -S jdk19-openjdk
 $ sudo pacman -S jdk8-openjdk
 #using archlinux-java set to specify the jdk
+```
+
+## 11 Remote Desktop
+
+`pacman -S remmina` to install the remmina package.
+
+* For VNC support install the libvncserver package.
+* For SPICE support install the spice-gtk package.
+* For RDP support, also install the optional freerdp.
+* Password saving depends on GNOME Keyring or KDE Wallet.
+
+```bash
+remmina -c rdp://username@server
+remmina -c rdp://domain\\username@server
+remmina -c vnc://username@server
+remmina -c vnc://server?VncUsername=username
+remmina -c ssh://user@server
+remmina -c spice://server
+```
+
+### ubuntu server
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install xrdp 
+sudo systemctl status xrdp
+#Xrdp会读取使用/etc/ssl/private/ssl-cert-snakeoil.key文件，但该文件仅由ssl-cert组的成员读取。 因此你需要运行以下命令以将xrdp用户添加到ssl-cert组
+sudo adduser xrdp ssl-cert
+sudo systemctl restart xrdp
+#Xrdp配置文件位于/etc/xrdp目录中。
+
+sudo ufw allow from 192.168.33.0/24 to any port 3389
+#sudo ufw allow 3389
 ```
 
 ## macOS & IOS
