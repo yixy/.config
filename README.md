@@ -1,4 +1,4 @@
-# my config 
+# my config
 
 ## 0 my configuration
 
