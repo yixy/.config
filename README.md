@@ -32,7 +32,7 @@ archive:
 ip link
 
 #enp0s3是对应要使用的网卡device
-in link set enp0s3 up
+ip link set enp0s3 up
 
 # 查找Wi-Fi
 # 注意，iwlist命令需安装wireless-tools组件
@@ -115,6 +115,10 @@ grub-install --target=x86_64-efi --efi-directory=/boot
 # pacman -Qe
 # 查询所有已安装的非系统软件，不显示版本和介绍信息
 # pacman -Qeq
+# install by pacman
+# pacman -Qeqn
+# install manual
+# pacman -Qeqm
 # 在已安装软件中查找
 # pacman -Qs xxx
 
