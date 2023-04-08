@@ -19,6 +19,9 @@ export GRAALVM_HOME=~/sdk/graalvm-ce-java17-22.3.1
 export JAVA_HOME=~/sdk/graalvm-ce-java17-22.3.1
 export PATH=$PATH:$GOBIN:$GRAALVM_HOME/bin
 
+#add this to run idea in none-root user
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 export EDITOR=nvim
 
 unset SSH_AGENT_PID
