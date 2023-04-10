@@ -685,7 +685,19 @@ $ sudo pacman -S jdk8-openjdk
 #using archlinux-java set to specify the jdk
 ```
 
-## 11 Remote Desktop
+## 11 Bluetooth
+
+https://wiki.archlinux.org/title/bluetooth
+
+```bash
+systemctl enable bluetooth
+systemctl restart bluetooth
+
+#see the Pairing example
+bluetoothctl
+```
+
+## 12 Remote Desktop
 
 `pacman -S remmina` to install the remmina package.
 
