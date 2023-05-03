@@ -1,0 +1,8 @@
+[user]
+	signingkey = 7272A6C405B03634!
+	email = youzhilane01@gmail.com
+	name = yixy
+[commit]
+  gpgsign = true
+[core]
+  quotepath = false
