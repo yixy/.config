@@ -27,11 +27,18 @@ Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'vim-plug']}
 Plug 'dart-lang/dart-vim-plugin'
 "go: for build, run, debug
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"rust
+Plug 'rust-lang/rust.vim'
 call plug#end ()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " common setting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"for rust
+syntax enable
+filetype plugin indent on
+
 "补全时菜单排序展示
 set wildmenu
 

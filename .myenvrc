@@ -3,7 +3,7 @@ alias vpn='export http_proxy="http://127.0.0.1:8001"; export HTTP_PROXY="http://
 alias novpn='export http_proxy=""; export HTTP_PROXY=""; export https_proxy=""; export HTTPS_PROXY=""'
 
 alias vim='nvim'
-alias wl='sudo systemctl restart iwd.service ;sudo systemctl restart systemd-resolved.service;sudo systemctl restart systemd-networkd.service;sudo systemctl restart dhcpcd.service'
+alias wl='sudo systemctl restart systemd-resolved.service;sudo systemctl restart systemd-networkd.service;sudo systemctl restart dhcpcd.service;sudo systemctl restart iwd.service ;'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
 
@@ -16,8 +16,8 @@ export GLFW_IM_MODULE=ibus
 export GOPATH=~/go
 export GOBIN=$GOPATH/bin
 export GRAALVM_HOME=~/sdk/graalvm-ce-java17-22.3.1
-export JAVA_HOME=~/sdk/graalvm-ce-java17-22.3.1
-export PATH=$PATH:$GOBIN:$GRAALVM_HOME/bin
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+export PATH=$PATH:$GOBIN:$JAVA_HOME/bin:$GRAALVM_HOME/bin:/opt/GoLand-2019.1.4/bin:/opt/appimages
 
 #add this to run idea in none-root user
 export _JAVA_AWT_WM_NONREPARENTING=1

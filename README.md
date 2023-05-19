@@ -730,6 +730,14 @@ sudo ufw allow from 192.168.33.0/24 to any port 3389
 #sudo ufw allow 3389
 ```
 
+## 13 IDE
+
+解决archlinux下idea中fcitx5光标不跟随的问题。
+
+```url
+https://github.com/RikudouPatrickstar/JetBrainsRuntime-for-Linux-x64/releases
+```
+
 ## macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
