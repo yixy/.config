@@ -738,6 +738,33 @@ sudo ufw allow from 192.168.33.0/24 to any port 3389
 https://github.com/RikudouPatrickstar/JetBrainsRuntime-for-Linux-x64/releases
 ```
 
+## 14 virtualbox
+
+```bash
+sudo pacman -S virtualbox
+
+#安装虚拟化内核模块 VirtualBox 需要虚拟化内核模块来运行。需要根据 CPU 类型选择不同的内核模块：
+#如果 CPU 支持 Intel VT-x 或 AMD-V 虚拟化技术，请安装 linux 和 linux-headers 软件包：
+sudo pacman -S linux linux-headers
+#如果 CPU 支持 Intel VT-d 或 AMD-Vi IOMMU，还需要安装 IOMMU 相关的软件包。例如，主板支持 Intel VT-d，请安装 intel-ucode 和 intel_iommu 软件包：
+sudo pacman -S intel-ucode intel_iommu
+#如果 CPU 不支持虚拟化技术，则无法运行 VirtualBox。
+
+#加载内核模块 安装完成后，需要加载虚拟化内核模块。使用以下命令加载内核模块：
+sudo modprobe vboxdrv
+
+#添加用户到 vboxusers 组 让用户可以访问 VirtualBox 设备，需要将其添加到 vboxusers 组中。使用以下命令添加用户到 vboxusers 组：
+sudo gpasswd -a yourusername vboxusers
+
+#内核参数修改，增加 "ibt=off"
+sudo -e /etc/default/grub
+#GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet ibt=off"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+#启动 VirtualBox
+VirtualBox
+```
+
 ## macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
