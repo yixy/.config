@@ -699,6 +699,8 @@ bluetoothctl
 
 ## 12 Remote Desktop
 
+### remmina client
+
 `pacman -S remmina` to install the remmina package.
 
 * For VNC support install the libvncserver package.
@@ -713,6 +715,24 @@ remmina -c vnc://username@server
 remmina -c vnc://server?VncUsername=username
 remmina -c ssh://user@server
 remmina -c spice://server
+```
+
+### xrdp server
+
+参考 https://wiki.archlinux.org/title/xrdp
+
+```bash
+yay -S xrdp
+#For Xorg sessions, you can enable OpenGL and Vulkan graphical acceleration by installing xorgxrdp-glamorAUR for Intel and AMD GPUs and xorgxrdp-nvidiaAUR for Nvidia GPUs.
+yay -S xorgxrdp-glamor
+yay -S pulseaudio-module-xrdp
+
+#sudo -e /etc/X11/Xwrapper.config
+allowed_users=anybody
+needs_root_rights=no
+
+systemctl enable xrdp.service
+systemctl start xrdp.service
 ```
 
 ### ubuntu server
