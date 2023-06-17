@@ -785,6 +785,54 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 VirtualBox
 ```
 
+## 15 firewalld
+
+```bash
+pacman -S firewalld
+
+sudo systemctl enable firewalld
+sudo systemctl restart firewalld
+
+#查看zone，即规则组合
+firewall-cmd --get-active-zones
+firewall-cmd --list-all-zones
+
+#默认区域将会被自动应用到新的接口上，查询默认区域使用：
+firewall-cmd --get-default-zone
+firewall-cmd --set-default-zone=zone
+#更改interface对应的zone
+firewall-cmd --zone=zone --change-interface=interface_name
+
+#NetworkManager 能够为不同的连接分配不同的区域。例如：将一个家庭 WiFi 分配到 "home" 区域， 将工作室 WiFi 分配到 "work" 区域，并将剩余 WiFi 分配到 "public" 区域。
+nmcli connection show
+#将 "myssid" 设置为 "home" 区域：
+nmcli connection modify myssid connection.zone home
+
+#服务是为特定守护程序预配置的规则。例如匹配 SSH 的 服务 {{ic|ssh} 在被分配到一个区域后会开放 22 端口。
+firewall-cmd --get-services
+firewall-cmd --info-service service_name
+#添加一个服务到区域：
+firewall-cmd --zone=zone_name --add-service service_name
+firewall-cmd --zone=zone_name --add-service service_name --permanent
+#移除服务：
+firewall-cmd --zone=zone_name --remove-service service_name
+firewall-cmd --zone=zone_name --remove-service service_name --permanent
+
+#查询打开的端口
+firewall-cmd --zone=public --list-ports
+#关闭端口9001，持久化配置，需要重新载入
+firewall-cmd --zone=public --remove-port=9001/tcp --permanent
+#允许ip192.168.0.1访问9001端口
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="192.168.0.1" port protocol="tcp" port="9001" accept"
+#查看已设置规则
+firewall-cmd --zone=public --list-rich-rules
+#可以直接在指定区域上开放端口。此处 protocol 应为 tcp 或 udp 之一。关闭端口使用带有相同的端口号和协议的 --remove-port 选项。
+firewall-cmd --zone=zone_name --add-port port_num/protocol
+
+#重新载入一下防火墙设置，使设置生效
+firewall-cmd --reload
+```
+
 ## macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
