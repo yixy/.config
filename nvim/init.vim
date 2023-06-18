@@ -408,7 +408,8 @@ let g:coc_global_extensions = [
   \ 'coc-json', 
   \ 'coc-vimlsp', 
   \ 'coc-flutter-tools',
-  \ 'coc-go'] 
+  \ 'coc-go',
+  \ 'coc-rust-analyzer']
 
 " 允许未保存的vim文件暂存到缓冲区
 set hidden

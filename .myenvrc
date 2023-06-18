@@ -33,3 +33,5 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 
 #eval $(keychain --eval --quiet ~/.ssh/id_rsa)
 #eval $(keychain --eval --quiet --agents gpg Alice)
+
+PULSE_SCRIPT=/etc/xrdp/pulse/default.pa

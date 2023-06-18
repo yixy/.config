@@ -6,7 +6,7 @@ md5sum ~/.config/ranger/rifle.conf ranger/rifle.conf
 echo ""
 md5sum ~/.myenvrc .myenvrc
 echo ""
-md5sum ~/.zshrc 
+md5sum ~/.zshrc zsh/.zshrc
 echo ""
 md5sum ~/.dwm/autostart.sh .dwm/autostart.sh
 echo ""
