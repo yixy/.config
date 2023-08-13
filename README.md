@@ -228,6 +228,12 @@ systemctl daemon-reload
 systemctl enable v2ray.service
 ```
 
+### 时钟同步
+
+```
+systemctl status systemd-timesyncd
+```
+
 ### fix EFI booting
 
 ```bash
