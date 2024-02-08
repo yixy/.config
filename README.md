@@ -839,6 +839,10 @@ firewall-cmd --zone=zone_name --add-port port_num/protocol
 firewall-cmd --reload
 ```
 
+## 16 录屏软件
+
+yay -S obs-studio
+
 ## macOS & IOS
 
 [mac系统偏好设置](/macos/01.mac系统偏好设置.md)
