@@ -4,6 +4,14 @@ xrandr --output HDMI-1 --mode 1680x1050
 xrandr --output HDMI-2 --mode 1680x1050
 #xrandr --output HDMI-2 --mode 1920x1080
 
+#for rmbp 13
+if [ $(xrandr | grep "current 2560 x 1600" |wc -l) == '1' ]
+then
+  #echo "Xft.dpi: 192" > ~/.Xresources
+  xrdb -merge ~/.Xresources
+fi
+
+#for dell
 if [ $(xrandr | grep "current 3840 x 2160" |wc -l) == '1' ]
 then
   xrdb -merge ~/.Xresources
